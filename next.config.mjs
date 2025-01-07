@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/telemarket",
+  basePath: "/Telmarket",
   output: "export",
   reactStrictMode: true
 };

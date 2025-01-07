@@ -1,6 +1,6 @@
 
 module.exports = {
-  basePath: '/telmarket',
+  basePath: '/Telmarket',
   assetPrefix: '/Telmarket/',
   images: {
     unoptimized: true

@@ -1,44 +1,70 @@
+@font-face {
+    font-family: 'IRANYekan';
+    src: url('/public/fonts/IRANYekanBlack.ttf') format('truetype');
+    font-weight: 900;
+    font-display: swap;
+}
+
+@font-face {
+font-family: 'IRANYekan';
+src: url('/fonts/IRANYekanBold.ttf') format('truetype');
+font-weight: bold;
+font-display: swap;
+}
+
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('/fonts/IRANYekanExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('/fonts/IRANYekanLight.ttf') format('truetype');
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('/fonts/IRANYekanMedium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('/fonts/IRANYekanRegular.ttf') format('truetype');
+  font-weight: normal;
+  font-display: swap;
+}
+:root {
+  --font-primary: 'IRANYekan', system-ui, sans-serif;
+}
+
 * {
   box-sizing: border-box;
-
   padding: 0;
   margin: 0;
+  font-family: var(--font-primary);
 }
 
-html {
-  font-size: 62.5%;
+html,
+body {
+  font-family: var(--font-primary);
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
-::-webkit-scrollbar {
-  width: 5px;
+.ph{
+  width: 100%;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #d9d9d9;
-  border-radius: 5px;
-}
-
-.ant-tabs-tab {
-  margin: 0 !important;
-}
-
-.ant-tabs-nav-list {
-  gap: 2rem !important;
-}
-
-@media only screen and (max-width: 768px) {
-  .display-none-in-mobile {
-    display: none;
-  }
-
-  .close-in-mobile {
-    flex: 0 0 65px !important;
-    max-width: 65px !important;
-    min-width: 65px !important;
-    width: 65px !important;
-  }
+.ph h1{
+  font-size: 2rem;
+  font-weight: 900;
 }

@@ -1,33 +1,18 @@
-import type { Metadata } from "next";
-import { Vazirmatn } from "next/font/google";
-import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { ConfigProvider } from "antd";
-import theme from "../theme/themeConfig";
-import "./globals.css";
+'use client'
 
-const vazirmatn = Vazirmatn({
-  subsets: ["latin", "arabic"],
-  display: "swap",
-});
+import { ReactNode } from 'react'
+import './globals.css'
+import { ThemeProvider } from '@mui/material/styles'
+import { theme } from '@/theme/theme'
 
-// TODO: complete logo and me  and metadata
-export const metadata: Metadata = {
-  title: "تل مارکت",
-  description: "",
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="fa" dir="rtl" className={vazirmatn.className}>
+    <html lang="fa" dir="rtl">
       <body>
-        <AntdRegistry>
-          <ConfigProvider theme={theme}>{children}</ConfigProvider>
-        </AntdRegistry>
+        <ThemeProvider theme={theme}>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

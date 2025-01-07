@@ -7,7 +7,7 @@ import BottomNav from '@/components/BottomNavigation'
 export default function MainLayout({ children }: { children: ReactNode }) {
   return (
     <div className="main-layout">
-      <MainAppBar title="تل‌مارکت" />
+      <MainAppBar />
       <main style={{ paddingTop: '64px', paddingBottom: '65px' }}>
         {children}
       </main>

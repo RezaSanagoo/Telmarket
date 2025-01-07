@@ -43,8 +43,7 @@ const Dashboard = () => {
           setItems(res.data);
         });
     }
-  }, []);
-
+  }, [router]); // Add router to dependencies
   const {
     token: { colorBgContainer },
   } = theme.useToken();

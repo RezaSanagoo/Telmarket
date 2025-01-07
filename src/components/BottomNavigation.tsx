@@ -3,8 +3,6 @@
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import School from "@mui/icons-material/SchoolRounded";
 import Person from "@mui/icons-material/PersonRounded";
-import AttachMoney from "@mui/icons-material/AttachMoneyRounded";
-import Search from "@mui/icons-material/SearchRounded";
 import Home from '@mui/icons-material/BookmarkRounded';
 import { useRouter, usePathname } from "next/navigation";
 import { useState, SyntheticEvent } from "react";

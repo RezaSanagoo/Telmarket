@@ -8,7 +8,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
   return (
     <div className="main-layout">
       <MainAppBar />
-      <main style={{ paddingTop: '64px', paddingBottom: '65px' }}>
+      <main style={{ paddingTop: '56px', paddingBottom: '92px' }}>
         {children}
       </main>
       <BottomNav />

@@ -5,7 +5,7 @@ export default function ProfilePage() {
   return (
     <div className="flex flex-col items-center w-full p-6 gap-[40px]">
       <div className="flex flex-col gap-[12px] items-center">
-        <div className="w-[108px] h-[108px] rounded-[59px] border-[3px] border-[#2589EE] shadow-[1px_3px_4px_0px_rgba(0,0,0,0.25)] relative p-[3px]">
+        <div className="w-[108px] h-[108px] rounded-[50%] border-[3px] border-[#2589EE] shadow-[1px_3px_4px_0px_rgba(0,0,0,0.25)] relative p-[3px]">
           <img
             className="w-24 h-24 rounded-[59px] object-cover"
             src="https://s8.uupload.ir/files/photo_2025-01-06_19-38-28_poe.jpg"

@@ -1,7 +1,13 @@
+"use client"; // این خط را اضافه کنید
+
+import { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 export default function ExplorePage() {
+  const [isLiked, setIsLiked] = useState(false);
+
   return (
     <div className="flex flex-col items-center w-full p-6 gap-[40px]">
       {/* matlab Stories  */}
@@ -41,7 +47,13 @@ export default function ExplorePage() {
             <p className="text-[16px] leading-[27.64px]">
               این یک متن نمونه است برای پست ها.
             </p>
-            <FavoriteBorderIcon sx={{ width: 21, height: 21 }} />
+            <div onClick={() => setIsLiked(!isLiked)} className="cursor-pointer">
+              {isLiked ? (
+                <FavoriteIcon sx={{ width: 21, height: 21, color: "#FF0000" }} />
+              ) : (
+                <FavoriteBorderIcon sx={{ width: 21, height: 21 }} />
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -15,7 +15,7 @@
   ],
   "theme_color": "#1A8BC4",
   "background_color": "#FFFFFF",
-  "start_url": "/",
+  "start_url": "/Telmarket/explore",
   "display": "standalone",
   "orientation": "portrait"
 }

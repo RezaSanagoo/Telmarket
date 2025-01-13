@@ -2,9 +2,9 @@
 
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import School from "@mui/icons-material/SchoolOutlined";
-import Person from '@mui/icons-material/AccountCircleOutlined';
-import Home from '@mui/icons-material/ExploreOutlined';
-import Price from '@mui/icons-material/InsertChartOutlined';
+import Person from "@mui/icons-material/AccountCircleOutlined";
+import Home from "@mui/icons-material/ExploreOutlined";
+import Price from "@mui/icons-material/InsertChartOutlined";
 import { useRouter, usePathname } from "next/navigation";
 import { useState, SyntheticEvent } from "react";
 
@@ -29,33 +29,33 @@ export default function BottomNav() {
         right: 0,
         borderTop: "1px solid #D9DCE0",
         height: "92px",
-        padding: "12px 8px",
+        padding: "8px",
         paddingTop: "0px",
         fontWeight: "bold",
         zIndexIndex: 1000,
-        '& .MuiSvgIcon-root': {
-      fontSize: '24px',
-      fontWeight: 'bold',
-    },
-        
+        "& .MuiSvgIcon-root": {
+          fontSize: "24px",
+          fontWeight: "bold",
+        },
+
         "& .MuiBottomNavigationAction-root": {
           color: "#353535",
-      '& path': {
-        // stroke: '#353535',
-      },
-      '& svg': {
-          width: '28px',
-          height: '28px',
-        },
+          "& path": {
+            // stroke: '#353535',
+          },
+          "& svg": {
+            width: "28px",
+            height: "28px",
+          },
           "&.Mui-selected": {
             color: "#1A8BC4",
-        '& path': {
-          // stroke: '#1A8BC4',
-        },
-        '& svg': {
-          width: '28px',
-          height: '28px',
-        }
+            "& path": {
+              // stroke: '#1A8BC4',
+            },
+            "& svg": {
+              width: "28px",
+              height: "28px",
+            },
           },
         },
       }}
@@ -66,6 +66,7 @@ export default function BottomNav() {
         icon={<Person />}
         sx={{
           minWidth: "auto",
+          borderRadius: "8px",
         }}
       />
       <BottomNavigationAction
@@ -74,20 +75,27 @@ export default function BottomNav() {
         icon={<School />}
         sx={{
           minWidth: "auto",
+          borderRadius: "8px",
         }}
       />
       <BottomNavigationAction
         label="قیمت‌ها"
         sx={{
           minWidth: "auto",
+          borderRadius: "8px",
         }}
         value="/prices"
         icon={<Price />}
       />
-      <BottomNavigationAction label="ویترین" value="/explore"
+      <BottomNavigationAction
+        label="ویترین"
+        value="/explore"
         sx={{
           minWidth: "auto",
-        }} icon={<Home />} />
+          borderRadius: "8px",
+        }}
+        icon={<Home />}
+      />
     </BottomNavigation>
   );
 }

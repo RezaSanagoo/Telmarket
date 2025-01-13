@@ -71,6 +71,8 @@ const ChatContent = ({ id }: { id: number | null }) => {
                   src={"https://alisadeqi.pythonanywhere.com" + item.file}
                   alt=""
                   style={{borderRadius: 5}}
+                  width={"100%"}
+                  height="auto"
                 />
                 <div style={{ blockSize: "1rem" }}></div>
                 <Typography.Paragraph

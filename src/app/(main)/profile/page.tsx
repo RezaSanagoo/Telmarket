@@ -13,6 +13,8 @@ export default function ProfilePage() {
             className="w-24 h-24 rounded-[59px] object-cover"
             src="https://s8.uupload.ir/files/photo_2025-01-06_19-38-28_poe.jpg"
             alt="Profile"
+            width={24}
+            height={24}
           />
         </div>
         <div className="flex flex-col justify-center items-center">

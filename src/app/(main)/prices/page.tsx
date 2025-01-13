@@ -34,7 +34,7 @@ const priceData: PriceCard[] = [
     title: "دلار آمریکا",
     abbreviation: "USD",
     change: 850,
-    price: "811,400",
+    price: "81,140",
   },
   {
     type: "currency",
@@ -42,7 +42,7 @@ const priceData: PriceCard[] = [
     title: "یورو",
     abbreviation: "EUR",
     change: 920,
-    price: "831,800",
+    price: "83,180",
   },
   {
     type: "currency",
@@ -50,7 +50,7 @@ const priceData: PriceCard[] = [
     title: "پوند انگلیس",
     abbreviation: "GBP",
     change: -450,
-    price: "988,700",
+    price: "98,870",
   },
   {
     type: "currency",
@@ -58,15 +58,15 @@ const priceData: PriceCard[] = [
     title: "ین ژاپن",
     abbreviation: "JPY",
     change: 15,
-    price: "5,550",
+    price: "52,000",
   },
   {
     type: "currency",
     icon: "https://hatscripts.github.io/circle-flags/flags/ch.svg",
     title: "فرانک سوئیس",
     abbreviation: "CHF",
-    change: -280,
-    price: "889,600",
+    change: 280,
+    price: "89,210",
   },
   {
     type: "currency",
@@ -74,7 +74,7 @@ const priceData: PriceCard[] = [
     title: "دلار استرالیا",
     abbreviation: "AUD",
     change: 340,
-    price: "550,000",
+    price: "50,360",
   },
   {
     type: "currency",
@@ -82,7 +82,7 @@ const priceData: PriceCard[] = [
     title: "دلار کانادا",
     abbreviation: "CAD",
     change: -180,
-    price: "600,000",
+    price: "56,940",
   },
   {
     type: "currency",
@@ -90,7 +90,7 @@ const priceData: PriceCard[] = [
     title: "یوان چین",
     abbreviation: "CNY",
     change: 120,
-    price: "110,900",
+    price: "11,700",
   },
   {
     type: "currency",
@@ -98,7 +98,7 @@ const priceData: PriceCard[] = [
     title: "دلار نیوزیلند",
     abbreviation: "NZD",
     change: -220,
-    price: "500,000",
+    price: "45,430",
   },
   {
     type: "currency",
@@ -106,7 +106,7 @@ const priceData: PriceCard[] = [
     title: "کرون سوئد",
     abbreviation: "SEK",
     change: 90,
-    price: "72,800",
+    price: "7,300",
   },
 
   // Cryptocurrencies
@@ -116,7 +116,7 @@ const priceData: PriceCard[] = [
     title: "بیت‌کوین",
     abbreviation: "BTC",
     change: 25000000,
-    price: "2,123,450,000",
+    price: "7,603,497,000",
   },
   {
     type: "crypto",
@@ -124,7 +124,7 @@ const priceData: PriceCard[] = [
     title: "اتریوم",
     abbreviation: "ETH",
     change: 4500000,
-    price: "115,670,000",
+    price: "253,123,997",
   },
   {
     type: "crypto",
@@ -132,7 +132,7 @@ const priceData: PriceCard[] = [
     title: "بایننس کوین",
     abbreviation: "BNB",
     change: -1200000,
-    price: "89,450,000",
+    price: "56,185,400",
   },
   {
     type: "crypto",
@@ -140,7 +140,7 @@ const priceData: PriceCard[] = [
     title: "سولانا",
     abbreviation: "SOL",
     change: 850000,
-    price: "24,780,000",
+    price: "14,849,700",
   },
   {
     type: "crypto",
@@ -148,7 +148,7 @@ const priceData: PriceCard[] = [
     title: "ریپل",
     abbreviation: "XRP",
     change: -95000,
-    price: "15,340,000",
+    price: "204,012",
   },
   {
     type: "crypto",
@@ -156,7 +156,7 @@ const priceData: PriceCard[] = [
     title: "کاردانو",
     abbreviation: "ADA",
     change: 45000,
-    price: "1,890,000",
+    price: "76,767",
   },
   {
     type: "crypto",
@@ -164,7 +164,7 @@ const priceData: PriceCard[] = [
     title: "پولکادات",
     abbreviation: "DOT",
     change: -180000,
-    price: "6,780,000",
+    price: "519,860",
   },
   {
     type: "crypto",
@@ -172,7 +172,7 @@ const priceData: PriceCard[] = [
     title: "دوج‌کوین",
     abbreviation: "DOGE",
     change: 12000,
-    price: "780,000",
+    price: "26,909",
   },
   {
     type: "crypto",
@@ -180,7 +180,7 @@ const priceData: PriceCard[] = [
     title: "چین‌لینک",
     abbreviation: "LINK",
     change: 280000,
-    price: "14,560,000",
+    price: "1,557,982",
   },
   {
     type: "crypto",
@@ -188,7 +188,7 @@ const priceData: PriceCard[] = [
     title: "پالیگان",
     abbreviation: "MATIC",
     change: -85000,
-    price: "2,890,000",
+    price: "35,578",
   },
 
   // Commodities
@@ -198,7 +198,7 @@ const priceData: PriceCard[] = [
     title: "طلای 18 عیار",
     abbreviation: "GOLD",
     change: -85000,
-    price: "2,890,000",
+    price: "5,282,330",
   },
   {
     type: "commodity",
@@ -206,7 +206,7 @@ const priceData: PriceCard[] = [
     title: "سکه امامی",
     abbreviation: "COIN",
     change: -85000,
-    price: "2,890,000",
+    price: "56,470,000",
   },
   {
     type: "commodity",
@@ -214,7 +214,7 @@ const priceData: PriceCard[] = [
     title: "نیم سکه",
     abbreviation: "HCOIN",
     change: -85000,
-    price: "2,890,000",
+    price: "31,500,000",
   },
   {
     type: "commodity",
@@ -222,7 +222,7 @@ const priceData: PriceCard[] = [
     title: "ربع سکه",
     abbreviation: "QCOIN",
     change: -85000,
-    price: "2,890,000",
+    price: "17,600,000",
   },
   {
     type: "commodity",
@@ -230,9 +230,11 @@ const priceData: PriceCard[] = [
     title: "نفت برنت",
     abbreviation: "BRENT",
     change: -85000,
-    price: "2,890,000",
+    price: "6,480,000",
   },
 ];
+
+
 
 import { useState } from "react";
 import { Tabs, Tab, Box } from "@mui/material";
@@ -255,11 +257,12 @@ export default function PricesPage() {
 
   return (
     <div className="w-full p-4 flex flex-col ">
-      <div className="fixed bg-white w-full p-4 right-0 top-[56px] z-50">
-        <div className="font-bold text-xl flex items-center gap-2">
-          <Time className="text-2xl" />
-          قیمت لحظه‌ای
-        </div>
+      <div className="fixed bg-white w-full p-4 pt-6 pb-0 right-0 top-[56px] z-50">
+      <div className="font-bold text-xl flex items-center gap-2">
+        <Time className="text-2xl"/>
+        قیمت لحظه‌ای
+        <sub className="text-[12px] font-bold">(تومان)</sub>
+      </div>
 
         <Box sx={{ borderBottom: 1, borderColor: "divider", pb: "0px" }}>
           <Tabs
@@ -276,26 +279,29 @@ export default function PricesPage() {
         </Box>
       </div>
 
-      <div className="grid grid-cols-2 gap-x-2 gap-y-2 mt-[93px]">
+      <div className="grid grid-cols-2 gap-x-2 gap-y-2 mt-[101px]">
         {filteredData().map((item, index) => (
           <div
             key={index}
             className="w-[clac(50% - 4px)] aspect-square rounded-[28px] bg-gray-100 p-5 flex flex-col justify-between"
           >
             <div className="flex items-center justify-between">
-              <div className="h-8">
-                <h3 className="font-IRANYekan text-sm font-extrabold leading-4 text-right text-black">
-                  {item.title}
-                </h3>
-                <span className="font-IRANYekan text-xs font-bold leading-4 text-right text-[#454343]">
-                  {item.abbreviation}
-                </span>
-              </div>
-              <Image
-                src={item.icon}
-                alt={item.title}
-                className="w-[32px] h-[32px]"
-              />
+
+            <div className="h-8">
+              <h3 className="font-IRANYekan text-sm font-extrabold leading-4 text-right text-black">
+                {item.title}
+              </h3>
+              <span className="font-IRANYekan text-xs font-bold leading-4 text-right text-[#454343]">
+                {item.abbreviation}
+              </span>
+            </div>
+            <Image
+              src={item.icon}
+              alt={item.title}
+              className="w-[32px] h-[32px]"
+              width={32}
+              height={32}
+            />
             </div>
 
             <div className="flex flex-col items-end ">

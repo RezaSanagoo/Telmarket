@@ -41,7 +41,14 @@ export default function MainAppBar() {
         }}
       >
         <Toolbar className='flex justify-between'>
-          <Image src={logo.src} alt="logo" className='h-6 mr-2'/>
+                  <Image 
+                    src={logo.src}
+                    alt="TelMarket"
+                    width={72}  // Adjust based on your logo's dimensions
+                    height={24}  // Adjust based on your logo's dimensions
+                    className="h-6 mr-2"
+                    priority
+                  />
           <IconButton
             size="large"
             edge="start"
@@ -64,7 +71,10 @@ export default function MainAppBar() {
         swipeAreaWidth={30}
       >
         <List className='my-3 w-[70vw]'>
-        <Image src={logo.src} alt="logo" className='h-6 mr-4'/>
+        <Image src={logo.src} alt="logo" className='h-6 mr-4'
+        width={72}
+        height={24}
+        />
 
         <hr className='mt-3' />
 

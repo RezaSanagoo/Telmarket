@@ -264,6 +264,7 @@ export default function PricesPage() {
       <div className="font-bold text-xl flex items-center gap-2">
         <Time className="text-2xl"/>
         قیمت لحظه‌ای
+        <sub className="text-sm font-normal">تومان</sub>
       </div>
 
       <Box sx={{ borderBottom: 1, borderColor: 'divider', pb: '0px' }}>
@@ -301,6 +302,8 @@ export default function PricesPage() {
               src={item.icon}
               alt={item.title}
               className="w-[32px] h-[32px]"
+              width={32}
+              height={32}
             />
             </div>
 

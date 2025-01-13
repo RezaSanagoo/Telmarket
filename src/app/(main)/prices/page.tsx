@@ -260,11 +260,11 @@ export default function PricesPage() {
 
   return (
     <div className="w-full p-4 flex flex-col ">
-      <div className="fixed bg-white w-full p-4 right-0 top-[56px] z-50">
+      <div className="fixed bg-white w-full p-4 pt-6 pb-0 right-0 top-[56px] z-50">
       <div className="font-bold text-xl flex items-center gap-2">
         <Time className="text-2xl"/>
         قیمت لحظه‌ای
-        <sub className="text-sm font-normal">تومان</sub>
+        <sub className="text-[12px] font-bold">(تومان)</sub>
       </div>
 
       <Box sx={{ borderBottom: 1, borderColor: 'divider', pb: '0px' }}>
@@ -282,7 +282,7 @@ export default function PricesPage() {
       </Box>
       </div>
 
-      <div className="grid grid-cols-2 gap-x-2 gap-y-2 mt-[93px]">
+      <div className="grid grid-cols-2 gap-x-2 gap-y-2 mt-[101px]">
         {filteredData().map((item, index) => (
           <div
             key={index}

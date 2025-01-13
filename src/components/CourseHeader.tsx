@@ -8,17 +8,17 @@ import Right from '@mui/icons-material/ChevronRightRounded';
 interface CourseHeaderProps {
     image: string
     name: string
-    instructor: string
   }
   
-  export default function CourseHeader({ image, name, instructor }: CourseHeaderProps) {
+  export default function CourseHeader({ image, name }: CourseHeaderProps) {
     const router = useRouter()
 
     return (
     <div className="flex items-center gap-4 aps p-4 py-2 bg-white border-b fixed top-0 left-0 right-0 z-30 justify-between">
       <div className='flex items-center p-px rounded-md w-10 justify-center' onClick={() => router.push('/courses')}>
-      <Right className='text-4xl mx-[-8px] text-[#707991]'/>
-
+      <IconButton>
+        <Right className='text-4xl text-[#707991]'/>
+      </IconButton>
       </div>
       <div className="flex flex-col items-center justify-center">
       <Avatar

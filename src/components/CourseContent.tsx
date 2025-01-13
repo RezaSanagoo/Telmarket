@@ -37,9 +37,9 @@ export default function CourseContent({}: { id: string }) {
       <div className="h-full p-4 px-2 flex flex-col items-end">
         <div className="max-w-[60rem] w-full">
           {coursePosts.map((item) => (
-            <div className="w-full flex flex-col items-end mb-4 gap-1">
+            <div
+                key={item.id} className="w-full flex flex-col items-end mb-4 gap-1">
               <div
-                key={item.id}
                 className="relative rounded-xl bg-[#00000010] rounded-ee rounded-es border border-gray-200 font-IRANYekan py-1 w-11/12"
               >
                 <h4 className="mb-2 text-sm px-3 font-bold">{item.title}</h4>
@@ -53,7 +53,7 @@ export default function CourseContent({}: { id: string }) {
                   className="h-6"
                 />
 
-                <p className="whitespace-pre-line text-sm px-3 mb-[-16px]">
+                <p className="whitespace-pre-line text-sm px-3 pt-2 mb-[-16px]">
                   {item.content}
                 </p>
                 <div className="h-8"></div>

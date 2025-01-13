@@ -12,7 +12,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
   return (
     <div className="main-layout">
       {showAppBar && <MainAppBar />}
-      <main className={`${showAppBar ? 'pt-[56px]' : 'pt-[77px]'} pb-[92px]`}>
+      <main className={`${showAppBar ? 'pt-[56px]' : 'pt-[71px]'} pb-[92px]`}>
         {children}
       </main>
       <BottomNav />

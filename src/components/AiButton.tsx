@@ -24,7 +24,7 @@ const StyledWrapper = styled.div`
     gap: 5px;
   }
   .outer-cont {
-    padding: 8px 16px;
+    padding: 8px 0px;
     border: none;
     font-size: 14px;
     cursor: pointer;

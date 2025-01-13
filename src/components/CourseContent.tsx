@@ -1,6 +1,8 @@
 'use client'
 
 import CourseHeader from './CourseHeader'
+import Image from 'next/image'
+
 
 const coursePosts = [
   {
@@ -32,22 +34,24 @@ export default function CourseContent({ }: { id: string }) {
     <div className="flex flex-col h-full">
     <CourseHeader {...courseInfo} />
     <div className="h-full p-4 px-2 flex flex-col items-end">
-      <div className="max-w-[60rem] w-full flex flex-col items-end">
+      <div className="max-w-[60rem] w-full">
         {coursePosts.map((item) => (
-          <div key={item.id} className="relative mb-4 rounded-xl bg-[#2589EE22] rounded-ee border-none shadow font-IRANYekan py-1 w-11/12">
+          <div key={item.id} className="relative mb-4 p-4 rounded-xl shadow-md">
+            <Image 
+              src={item.file}
+              alt={item.title}
+              width={800}
+              height={400}
+              className="w-full rounded-lg mb-4"
+            />
             <h4 className="mb-2 text-sm px-3 font-bold">
               {item.title}
             </h4>
-            <img 
-              src={item.file}
-              alt=""
-              className="w-full mb-3"
-            />
-            <p className="whitespace-pre-line text-base px-3 mb-[-16px]">
+            <p className="whitespace-pre-line text-sm px-3 mb-[-16px]">
               {item.content}
             </p>
             <div className="h-8"></div>
-            <span className="absolute bottom-3 left-3 text-gray-500 text-sm">
+            <span className="absolute bottom-1 left-3 text-gray-500 text-sm">
               {item.created_at}
             </span>
           </div>

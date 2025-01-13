@@ -2,6 +2,7 @@
 
 import { List, ListItem, ListItemAvatar, Avatar, ListItemText, Typography } from '@mui/material'
 import { useRouter } from 'next/navigation'
+import Search from "@mui/icons-material/Search";
 
 const courses = [
   {
@@ -22,6 +23,18 @@ export default function CoursesPage() {
   const router = useRouter()
 
   return (
+    <>
+    
+    <div className="relative w-full h-[60px] p-3 pt-4 pb-1">
+        <div className="flex items-center w-full h-full px-4 bg-[#ECECEC] rounded-[9px] gap-4">
+          <Search className=" text-gray-500" />
+          <input
+            type="text"
+            placeholder="جستجو"
+            className="w-full h-[20px] bg-transparent outline-none font-iranYekan text-right placeholder:text-gray-500"
+          />
+        </div>
+      </div>
     <List className="w-full bg-white">
       {courses.map((course) => (
         <ListItem 
@@ -58,5 +71,6 @@ export default function CoursesPage() {
         </ListItem>
       ))}
     </List>
-  )
+    
+  </>)
 }

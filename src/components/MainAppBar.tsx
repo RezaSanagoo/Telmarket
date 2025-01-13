@@ -1,62 +1,92 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
-import { AppBar, IconButton, Toolbar, Typography } from '@mui/material'
-import MenuIcon from '@mui/icons-material/MenuRounded';
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { AppBar, IconButton, Toolbar, SwipeableDrawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material'
+import MenuIcon from '@mui/icons-material/MenuRounded'
+import PersonIcon from '@mui/icons-material/Person'
+import SchoolIcon from '@mui/icons-material/School'
+import LogoutIcon from '@mui/icons-material/Logout'
+import Image from 'next/image'
+
+
+import logo from '../../public/img/LogoT.png'
 
 export default function MainAppBar() {
-  const pathname = usePathname()
-  
-  const getPageTitle = (path: string) => {
-    switch (path) {
-      case '/explore':
-        return 'ویترین'
-      case '/search':
-        return 'جستجو'
-      case '/prices':
-        return 'قیمت‌ها'
-      case '/courses':
-        return 'دوره‌ها'
-      case '/profile':
-        return 'پروفایل'
-      default:
-        return 'تل‌مارکت'
-    }
-  }
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const router = useRouter()
+
+  const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent)
+
+  const menuItems = [
+    { text: 'پروفایل', icon: <PersonIcon />, path: '/profile' },
+    { text: 'دوره‌ها', icon: <SchoolIcon />, path: '/courses' },
+    { text: 'خروج', icon: <LogoutIcon />, onClick: () => {
+      localStorage.removeItem('token')
+      router.push('/login')
+    }}
+  ]
 
   return (
-    <AppBar 
-      position="fixed" 
-      sx={{ 
-        top: 0,
-        backgroundColor: 'white',
-        color: '#000',
-        boxShadow: 'none',
-        borderBottom: '1px solid #D9DCE0',
-      }}
-    >
-      <Toolbar>
-        <Typography 
-          variant="h6" 
-          component="div" 
-          sx={{ 
-            flexGrow: 1,
-            fontWeight: '900',
-            textAlign: 'right',
-            fontSize: '20px',
-          }}
-        >
-          {getPageTitle(pathname)}
-        </Typography>
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          sx={{ ml: 1, padding: 0 }}
-        >
-          <MenuIcon />
-        </IconButton>
-      </Toolbar>
-    </AppBar>
+    <>
+      <AppBar 
+        position="fixed" 
+        sx={{ 
+          top: 0,
+          backgroundColor: 'white',
+          color: '#000',
+          boxShadow: 'none',
+          borderBottom: '1px solid #D9DCE0',
+          zIndex: 1000,
+        }}
+      >
+        <Toolbar className='flex justify-between'>
+          <Image src={logo.src} alt="logo" className='h-6 mr-2'/>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            onClick={() => setDrawerOpen(true)}
+            sx={{ ml: 1, padding: 0 }}
+          >
+            <MenuIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
+      <SwipeableDrawer
+        anchor="left"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        onOpen={() => setDrawerOpen(true)}
+        disableBackdropTransition={!iOS}
+        disableDiscovery={iOS}
+        swipeAreaWidth={30}
+      >
+        <List className='my-3 w-[70vw]'>
+        <Image src={logo.src} alt="logo" className='h-6 mr-4'/>
+
+        <hr className='mt-3' />
+
+          {menuItems.map((item) => (
+            <ListItem
+              key={item.text}
+              onClick={() => {
+                if (item.path) {
+                  router.push(item.path)
+                } else if (item.onClick) {
+                  item.onClick()
+                }
+                setDrawerOpen(false)
+              }}
+              sx={{ cursor: 'pointer' }}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItem>
+          ))}
+        </List>
+      </SwipeableDrawer>
+    </>
   )
 }

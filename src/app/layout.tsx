@@ -8,6 +8,10 @@ import { theme } from '@/theme/theme'
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="fa" dir="rtl">
+      <head>
+        <link rel="manifest" href="/Telmarket/manifest.json" />
+        <meta name="theme-color" content="#fff" />
+      </head>
       <body>
         <ThemeProvider theme={theme}>
           {children}

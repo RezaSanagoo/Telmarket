@@ -1,33 +1,30 @@
-
-'use client'
+"use client";
 
 import ArrowUpRoundedIcon from "@mui/icons-material/KeyboardDoubleArrowUpRounded";
-import Time from '@mui/icons-material/TimelineRounded';
-import Image from 'next/image'
-
+import Time from "@mui/icons-material/TimelineRounded";
+import Image from "next/image";
 
 interface PriceCard {
-  type: 'currency' | 'crypto' | 'commodity'
-  icon: string
-  title: string
-  abbreviation: string
-  change: number
-  price: string
+  type: "currency" | "crypto" | "commodity";
+  icon: string;
+  title: string;
+  abbreviation: string;
+  change: number;
+  price: string;
 }
 function formatLargeNumber(num: number | string): string {
-  const n = typeof num === 'string' ? parseFloat(num.replace(/,/g, '')) : num
-  
-  if (n >= 1_000_000_000) {
-    return (n / 1_000_000_000).toFixed(2).replace(/\.?0+$/, '') + 'B'
-  }
-  
-  if (n >= 1_000_000) {
-    return (n / 1_000_000).toFixed(2).replace(/\.?0+$/, '') + 'M'
-  }
-  
-  return n.toLocaleString()
-}
+  const n = typeof num === "string" ? parseFloat(num.replace(/,/g, "")) : num;
 
+  if (n >= 1_000_000_000) {
+    return (n / 1_000_000_000).toFixed(2).replace(/\.?0+$/, "") + "B";
+  }
+
+  if (n >= 1_000_000) {
+    return (n / 1_000_000).toFixed(2).replace(/\.?0+$/, "") + "M";
+  }
+
+  return n.toLocaleString();
+}
 
 const priceData: PriceCard[] = [
   // Currencies
@@ -37,7 +34,7 @@ const priceData: PriceCard[] = [
     title: "دلار آمریکا",
     abbreviation: "USD",
     change: 850,
-    price: "811,40",
+    price: "81,140",
   },
   {
     type: "currency",
@@ -45,7 +42,7 @@ const priceData: PriceCard[] = [
     title: "یورو",
     abbreviation: "EUR",
     change: 920,
-    price: "831,80",
+    price: "83,180",
   },
   {
     type: "currency",
@@ -53,7 +50,7 @@ const priceData: PriceCard[] = [
     title: "پوند انگلیس",
     abbreviation: "GBP",
     change: -450,
-    price: "988,70",
+    price: "98,870",
   },
   {
     type: "currency",
@@ -61,15 +58,15 @@ const priceData: PriceCard[] = [
     title: "ین ژاپن",
     abbreviation: "JPY",
     change: 15,
-    price: "5,55",
+    price: "52,000",
   },
   {
     type: "currency",
     icon: "https://hatscripts.github.io/circle-flags/flags/ch.svg",
     title: "فرانک سوئیس",
     abbreviation: "CHF",
-    change: -280,
-    price: "889,60",
+    change: 280,
+    price: "89,210",
   },
   {
     type: "currency",
@@ -77,7 +74,7 @@ const priceData: PriceCard[] = [
     title: "دلار استرالیا",
     abbreviation: "AUD",
     change: 340,
-    price: "550,00",
+    price: "50,360",
   },
   {
     type: "currency",
@@ -85,7 +82,7 @@ const priceData: PriceCard[] = [
     title: "دلار کانادا",
     abbreviation: "CAD",
     change: -180,
-    price: "600,00",
+    price: "56,940",
   },
   {
     type: "currency",
@@ -93,7 +90,7 @@ const priceData: PriceCard[] = [
     title: "یوان چین",
     abbreviation: "CNY",
     change: 120,
-    price: "110,90",
+    price: "11,700",
   },
   {
     type: "currency",
@@ -101,7 +98,7 @@ const priceData: PriceCard[] = [
     title: "دلار نیوزیلند",
     abbreviation: "NZD",
     change: -220,
-    price: "500,00",
+    price: "45,430",
   },
   {
     type: "currency",
@@ -109,7 +106,7 @@ const priceData: PriceCard[] = [
     title: "کرون سوئد",
     abbreviation: "SEK",
     change: 90,
-    price: "72,80",
+    price: "7,300",
   },
 
   // Cryptocurrencies
@@ -119,7 +116,7 @@ const priceData: PriceCard[] = [
     title: "بیت‌کوین",
     abbreviation: "BTC",
     change: 25000000,
-    price: "2,123,450,00",
+    price: "7,603,497,000",
   },
   {
     type: "crypto",
@@ -127,7 +124,7 @@ const priceData: PriceCard[] = [
     title: "اتریوم",
     abbreviation: "ETH",
     change: 4500000,
-    price: "115,670,00",
+    price: "253,123,997",
   },
   {
     type: "crypto",
@@ -135,7 +132,7 @@ const priceData: PriceCard[] = [
     title: "بایننس کوین",
     abbreviation: "BNB",
     change: -1200000,
-    price: "89,450,00",
+    price: "56,185,400",
   },
   {
     type: "crypto",
@@ -143,7 +140,7 @@ const priceData: PriceCard[] = [
     title: "سولانا",
     abbreviation: "SOL",
     change: 850000,
-    price: "24,780,00",
+    price: "14,849,700",
   },
   {
     type: "crypto",
@@ -151,7 +148,7 @@ const priceData: PriceCard[] = [
     title: "ریپل",
     abbreviation: "XRP",
     change: -95000,
-    price: "15,340,00",
+    price: "204,012",
   },
   {
     type: "crypto",
@@ -159,7 +156,7 @@ const priceData: PriceCard[] = [
     title: "کاردانو",
     abbreviation: "ADA",
     change: 45000,
-    price: "1,890,00",
+    price: "76,767",
   },
   {
     type: "crypto",
@@ -167,7 +164,7 @@ const priceData: PriceCard[] = [
     title: "پولکادات",
     abbreviation: "DOT",
     change: -180000,
-    price: "6,780,00",
+    price: "519,860",
   },
   {
     type: "crypto",
@@ -175,7 +172,7 @@ const priceData: PriceCard[] = [
     title: "دوج‌کوین",
     abbreviation: "DOGE",
     change: 12000,
-    price: "780,00",
+    price: "26,909",
   },
   {
     type: "crypto",
@@ -183,7 +180,7 @@ const priceData: PriceCard[] = [
     title: "چین‌لینک",
     abbreviation: "LINK",
     change: 280000,
-    price: "14,560,00",
+    price: "1,557,982",
   },
   {
     type: "crypto",
@@ -191,7 +188,7 @@ const priceData: PriceCard[] = [
     title: "پالیگان",
     abbreviation: "MATIC",
     change: -85000,
-    price: "2,890,00",
+    price: "35,578",
   },
 
   // Commodities
@@ -201,7 +198,7 @@ const priceData: PriceCard[] = [
     title: "طلای 18 عیار",
     abbreviation: "GOLD",
     change: -85000,
-    price: "2,890,00",
+    price: "5,282,330",
   },
   {
     type: "commodity",
@@ -209,7 +206,7 @@ const priceData: PriceCard[] = [
     title: "سکه امامی",
     abbreviation: "COIN",
     change: -85000,
-    price: "2,890,00",
+    price: "56,470,000",
   },
   {
     type: "commodity",
@@ -217,7 +214,7 @@ const priceData: PriceCard[] = [
     title: "نیم سکه",
     abbreviation: "HCOIN",
     change: -85000,
-    price: "2,890,00",
+    price: "31,500,000",
   },
   {
     type: "commodity",
@@ -225,7 +222,7 @@ const priceData: PriceCard[] = [
     title: "ربع سکه",
     abbreviation: "QCOIN",
     change: -85000,
-    price: "2,890,00",
+    price: "17,600,000",
   },
   {
     type: "commodity",
@@ -233,30 +230,30 @@ const priceData: PriceCard[] = [
     title: "نفت برنت",
     abbreviation: "BRENT",
     change: -85000,
-    price: "2,890,00",
+    price: "6,480,000",
   },
 ];
 
 
 
-import { useState } from 'react'
-import { Tabs, Tab, Box } from '@mui/material'
+import { useState } from "react";
+import { Tabs, Tab, Box } from "@mui/material";
 
 export default function PricesPage() {
-  const [selectedTab, setSelectedTab] = useState(0)
+  const [selectedTab, setSelectedTab] = useState(0);
 
   const filteredData = () => {
-    switch(selectedTab) {
+    switch (selectedTab) {
       case 0:
-        return priceData.slice(0, 10) // Top 10 Currencies
+        return priceData.slice(0, 10); // Top 10 Currencies
       case 1:
-        return priceData.slice(10, 20) // Top 10 Cryptocurrencies
+        return priceData.slice(10, 20); // Top 10 Cryptocurrencies
       case 2:
-        return priceData.slice(20, 25) // Commodities
+        return priceData.slice(20, 25); // Commodities
       default:
-        return priceData
+        return priceData;
     }
-  }
+  };
 
   return (
     <div className="w-full p-4 flex flex-col ">
@@ -308,26 +305,32 @@ export default function PricesPage() {
             </div>
 
             <div className="flex flex-col items-end ">
-            <div className="flex items-center gap-[6px]">
-              <span className={` transition-transform
-                  ${item.change < 0 ? "text-[#F80000]" : "text-[#00C853]"} text-[22px] font-black pt-1`}>
-                {formatLargeNumber(Math.abs(item.change))}
-              </span>
-              <ArrowUpRoundedIcon
-                className={` transition-transform
+              <div className="flex items-center gap-[6px]">
+                <span
+                  className={` transition-transform
+                  ${item.change < 0 ? "text-[#F80000]" : "text-[#00C853]"} text-[22px] font-black pt-1`}
+                >
+                  {formatLargeNumber(Math.abs(item.change))}
+                </span>
+                <ArrowUpRoundedIcon
+                  className={` transition-transform
                   ${item.change < 0 ? "rotate-180 text-[#F80000]" : "text-[#00C853]"} text-3xl mx-[-8px]`}
-              />
-            </div>
+                />
+              </div>
 
-            <div className="">
-              <span className="font-IRANYekan text-[32px] font-black leading-[36px] text-black">
-              {formatLargeNumber(item.price)}
-              </span>
-            </div>
+              <div className="">
+                <span className="font-IRANYekan text-[32px] font-black leading-[36px] text-black">
+                  {formatLargeNumber(item.price)}
+                </span>
+              </div>
             </div>
           </div>
         ))}
       </div>
     </div>
-  )
+  );
 }
+
+
+
+

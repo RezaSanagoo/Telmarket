@@ -1,80 +1,88 @@
-import Bookmark from "@mui/icons-material/BookmarkRounded";
-import Shopping from "@mui/icons-material/ShoppingCartRounded";
-
-import Image from 'next/image'
-
+"use client";
+import { Box , Tabs, Tab, CircularProgress } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import { useState } from "react";
 
 export default function ProfilePage() {
-  return (
-    <div className="flex flex-col items-center w-full p-6 gap-[40px]">
-      <div className="flex flex-col gap-[12px] items-center">
-        <div className="w-[108px] h-[108px] rounded-[50%] border-[3px] border-[#2589EE] shadow-[1px_3px_4px_0px_rgba(0,0,0,0.25)] relative p-[3px]">
-          <Image
-            className="w-24 h-24 rounded-[59px] object-cover"
-            src="https://s8.uupload.ir/files/photo_2025-01-06_19-38-28_poe.jpg"
-            alt="Profile"
-            width={24}
-            height={24}
-          />
-        </div>
-        <div className="flex flex-col justify-center items-center">
-          <div className="  font-IRANYekan text-[32px] font-black text-center text-black">
-            Reza Sanagoo
-          </div>
+  const [selectedTab, setSelectedTab] = useState(0);
 
-          <div className="font-IRANYekan text-[18px] font-black  text-center text-[#2E2E2E]">
-            09123456789
-          </div>
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setSelectedTab(newValue);
+  };
+
+  return (
+    <div className=" flex flex-col p-6 gap-4 ">
+      <div className="flex justify-between">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-[20px] font-bold text-right text-black">
+            رضا ثناگو
+          </h2>
+          <p className="text-xs text-[#2E2E2E]">Rezasa***@gmail.com</p>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <p className="text-xs text-[#2E2E2E]">آخرین بروزرسانی</p>
+          <p className="text-xs text-[#2E2E2E]">۱۸:۰۷ ۱۴۰۳/۱۰/۲۳</p>
         </div>
       </div>
-      <div className="flex flex-col items-center w-full">
-        <div className="flex flex-col gap-[16px] w-full">
-          <div className="w-full">
-            <div className="flex justify-start items-center gap-2 mb-1 pr-2">
-              <Bookmark />
-              <span className="font-IRANYekan text-[16px] font-bold leading-[27.64px] text-right">
-                علاقه مندی ها
-              </span>
-            </div>
 
-            <div className="flex p-2 gap-3 overflow-y-scroll flex-nowrap scroll-none">
-              {[
-                { width: "min-w-[116px]", rounded: "rounded-[28px]" },
-                { width: "min-w-[116px]", rounded: "rounded-[28px]" },
-                { width: "min-w-[116px]", rounded: "rounded-[28px]" },
-                { width: "min-w-[116px]", rounded: "rounded-[28px]" },
-              ].map((box, index) => (
-                <div
-                  key={`second-${index}`}
-                  className={`${box.width} h-[152px] ${box.rounded} bg-[#EFEFEF] shadow-[2px_4px_4px_0px_#00000040] backdrop-blur-[393.1px]`}
-                />
-              ))}
-            </div>
-          </div>
+      <div className=" bg-[rgba(26,139,196,0.05)] border border-[#1A8BC4] rounded-[10px] flex items-stretch">
+        <div className="flex-1 p-3">
+          <p className="text-[rgba(0,0,0,0.74)]">پروفایل خود را تکمیل کنید.</p>
         </div>
 
-        <div className="w-full">
-          <div className="flex justify-start items-center gap-2 mb-1 pr-2">
-            <Shopping />
-            <span className="font-IRANYekan text-[16px] font-bold leading-[27.64px] text-right">
-              دوره های خریداری شده
-            </span>
-          </div>
+        <div className="w-[1px] bg-[#1A8BC4]"></div>
 
-          <div className="flex p-2 gap-3 overflow-y-scroll flex-nowrap scroll-none">
-            {[
-              { width: "min-w-[116px]", rounded: "rounded-[28px]" },
-              { width: "min-w-[116px]", rounded: "rounded-[28px]" },
-              { width: "min-w-[116px]", rounded: "rounded-[28px]" },
-              { width: "min-w-[116px]", rounded: "rounded-[28px]" },
-            ].map((box, index) => (
-              <div
-                key={`second-${index}`}
-                className={`${box.width} h-[152px] ${box.rounded} bg-[#EFEFEF] shadow-[2px_4px_4px_0px_#00000040] backdrop-blur-[393.1px]`}
-              />
-            ))}
-          </div>
+        <button className="flex items-center p-3 text-[#1A8BC4] font-bold hover:bg-[rgba(26,139,196,0.1)] transition-colors">
+          {/* <EditIcon className="ml-1" /> نظرت راجب این چیه ؟؟؟؟؟؟ */}
+          ویرایش پروفایل
+        </button>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <h2 className="font-bold text-[20px] text-right">چشم‌انداز شما</h2>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+  <Tabs
+    value={selectedTab}
+    onChange={handleTabChange}
+    
+    textColor="primary"
+    indicatorColor="primary"
+  >
+    <Tab label="چشم انداز یک" />
+    <Tab label="چشم انداز دو" />
+    <Tab label="چشم انداز سه" />
+  </Tabs>
+</Box>
+      </div>
+
+      <div className="flex justify-center items-center">
+        <CircularProgress
+          variant="determinate"
+          value={75}
+          size={276}
+          className="text-[#1A8BC4]"
+        />
+        <div className="absolute flex flex-col items-center">
+          <p className="text-2xl font-bold">روند دوره</p>
+          <p className="text-[48px] font-black text-[#1A8BC4]">75%</p>
         </div>
+      </div>
+
+      <p className="text-xs font-bold text-right text-[rgba(0,0,0,0.8)]">
+        * توضیحات اضافه اینجا
+      </p>
+      <p className="text-xs font-bold text-right text-[rgba(0,0,0,0.8)]">
+        توضیحات اضافه اینجا توضیحات اضافه قرار میگیرد.
+      </p>
+
+      <div className="flex gap-4">
+        <button className="w-[167px] h-[42px] rounded-[12px] bg-[#1A8BC4] text-white">
+          دکمه اول
+        </button>
+        <button className="w-[167px] h-[42px] rounded-[12px] border bg-[#1A8BC4] text-white">
+          دکمه دوم
+        </button>
       </div>
     </div>
   );

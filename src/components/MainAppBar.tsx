@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+// import { usePathname } from 'next/navigation'
 import { AppBar, IconButton, Toolbar, SwipeableDrawer, List, ListItem, ListItemIcon, ListItemText  } from '@mui/material'
 import MenuIcon from '@mui/icons-material/MenuRounded'
 import PersonIcon from '@mui/icons-material/Person'
@@ -9,9 +10,29 @@ import SchoolIcon from '@mui/icons-material/School'
 import LogoutIcon from '@mui/icons-material/Logout'
 import Image from 'next/image'
 
-import logo from "../../public/img/LogoT.png";
+import logo from "../../public/img/Logo.png";
 
 export default function MainAppBar() {
+  
+  // const pathname = usePathname()
+  
+  // const getPageTitle = (path: string) => {
+  //   switch (path) {
+  //     case '/explore':
+  //       return 'ویترین'
+  //     case '/search':
+  //       return 'جستجو'
+  //     case '/prices':
+  //       return 'قیمت‌ها'
+  //     case '/courses':
+  //       return 'دوره‌ها'
+  //     case '/profile':
+  //       return 'پروفایل'
+  //     default:
+  //       return 'تل‌مارکت'
+  //   }
+  // }
+
   const [drawerOpen, setDrawerOpen] = useState(false);
   const router = useRouter();
 
@@ -46,20 +67,25 @@ export default function MainAppBar() {
         }}
       >
         <Toolbar className="flex justify-between">
+          <div className="flex items-center justify-center gap-1">
           <Image
             src={logo.src} 
             alt="TelMarket"
-            width={72} // Adjust based on your logo's dimensions
-            height={24} // Adjust based on your logo's dimensions
-            className="h-6 mr-2"
+            width={56} // Adjust based on your logo's dimensions
+            height={56} // Adjust based on your logo's dimensions
+            className="p-1"
             priority
           />
+          </div>
+          <p className='text-2xl font-extrabold text-[#4190FF]'>مــوجــــ</p>
+
+          {/* <p className='text-lg font-bold '>{getPageTitle(pathname)}</p> */}
+
           <IconButton
             size="large"
-            edge="start"
             color="inherit"
             onClick={() => setDrawerOpen(true)}
-            sx={{ ml: 1, padding: 0 }}
+            sx={{width: 40, height: 40, margin: "8px"}}
           >
             <MenuIcon />
           </IconButton>
@@ -78,9 +104,9 @@ export default function MainAppBar() {
           <Image
             src={logo.src}
             alt="logo"
-            className="h-6 mr-4"
-            width={72}
-            height={24}
+            className=" mr-4"
+            width={64}
+            height={64}
           />
 
           <hr className="mt-3" />

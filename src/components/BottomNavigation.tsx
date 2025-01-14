@@ -28,7 +28,7 @@ export default function BottomNav() {
         left: 0,
         right: 0,
         borderTop: "1px solid #D9DCE0",
-        height: "92px",
+        height: "86px",
         padding: "8px",
         paddingTop: "0px",
         fontWeight: "bold",
@@ -67,6 +67,7 @@ export default function BottomNav() {
         sx={{
           minWidth: "auto",
           borderRadius: "8px",
+          height: "78px",
         }}
       />
       <BottomNavigationAction
@@ -76,6 +77,7 @@ export default function BottomNav() {
         sx={{
           minWidth: "auto",
           borderRadius: "8px",
+          height: "78px",
         }}
       />
       <BottomNavigationAction
@@ -83,6 +85,7 @@ export default function BottomNav() {
         sx={{
           minWidth: "auto",
           borderRadius: "8px",
+          height: "78px",
         }}
         value="/prices"
         icon={<Price />}
@@ -93,6 +96,7 @@ export default function BottomNav() {
         sx={{
           minWidth: "auto",
           borderRadius: "8px",
+          height: "78px",
         }}
         icon={<Home />}
       />

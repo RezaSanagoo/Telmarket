@@ -268,7 +268,7 @@ export default function PricesPage() {
       </div>
 
       <Box sx={{ borderBottom: 1, borderColor: 'divider', pb: '0px' }}>
-        <Tabs 
+        <Tabs  
           value={selectedTab} 
           onChange={(_, newValue) => setSelectedTab(newValue)}
           variant="fullWidth"

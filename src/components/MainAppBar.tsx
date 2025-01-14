@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { AppBar, IconButton, Toolbar, SwipeableDrawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material'
+import { AppBar, IconButton, Toolbar, SwipeableDrawer, List, ListItem, ListItemIcon, ListItemText  } from '@mui/material'
 import MenuIcon from '@mui/icons-material/MenuRounded'
 import PersonIcon from '@mui/icons-material/Person'
 import SchoolIcon from '@mui/icons-material/School'
@@ -61,14 +61,13 @@ export default function MainAppBar() {
         </Toolbar>
       </AppBar>
 
-      <SwipeableDrawer
+      <SwipeableDrawer 
         anchor="left"
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         onOpen={() => setDrawerOpen(true)}
         disableBackdropTransition={!iOS}
         disableDiscovery={iOS}
-        swipeAreaWidth={30}
       >
         <List className='my-3 w-[70vw]'>
         <Image src={logo.src} alt="logo" className='h-6 mr-4'

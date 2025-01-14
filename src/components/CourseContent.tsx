@@ -50,7 +50,7 @@ export default function CourseContent({}: { id: string }) {
                   height={0}
                   sizes="100vw"
                   style={{ width: "100%", height: "auto" }}
-                  className="h-6"
+                  className=""
                 />
 
                 <p className="whitespace-pre-line text-sm px-3 pt-2 mb-[-16px]">

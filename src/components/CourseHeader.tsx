@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { Avatar, IconButton, Typography } from '@mui/material'
+import { Avatar, IconButton } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Right from '@mui/icons-material/ChevronRightRounded';
 
@@ -26,9 +26,9 @@ interface CourseHeaderProps {
         alt={name}
         className="w-8 h-8"
       />
-        <Typography className="font-bold text-sm">
+        <p className="font-bold text-sm">
           {name}
-        </Typography>
+        </p>
       </div>
       <IconButton>
         <MoreVertIcon />

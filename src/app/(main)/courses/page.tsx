@@ -43,21 +43,21 @@ export default function CoursesPage() {
           className="cursor-pointer hover:bg-gray-50"
           onClick={() => router.push(`/courses/${course.id}`)}
         >
-          <ListItemAvatar className=' ml-4 mt-0 rounded-[50%] '>
+          <ListItemAvatar className=' ml-4 mt-0 w-14 h-14 p-1 rounded-[50%] '>
             <Avatar 
               alt={course.title}
               src={course.image}
-              className="w-14 h-14 p-1"
+              
+              className="w-12 h-12"
             />
           </ListItemAvatar>
           <ListItemText
             primary={
-              <Typography
-                component="h2"
+              <p
                 className="font-bold mb-1 text-base text-right"
               >
                 {course.title}
-              </Typography>
+              </p>
             }
             secondary={
               <Typography

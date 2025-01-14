@@ -56,9 +56,9 @@ export default function ExplorePage() {
               </p>
               <div onClick={() => setIsLiked(!isLiked)} className="cursor-pointer">
                 {isLiked ? (
-                  <FavoriteIcon sx={{ width: 21, height: 21, color: "#FF0000" }} />
+                  <FavoriteIcon sx={{ width: 32, height: 32, color: "#FF0000" }} />
                 ) : (
-                  <FavoriteBorderIcon sx={{ width: 21, height: 21 }} />
+                  <FavoriteBorderIcon sx={{ width: 32, height: 32 }} />
                 )}
               </div>
             </div>

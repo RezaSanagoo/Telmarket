@@ -3,6 +3,7 @@
 import ArrowUpRoundedIcon from "@mui/icons-material/KeyboardDoubleArrowUpRounded";
 import Time from "@mui/icons-material/TimelineRounded";
 import Image from "next/image";
+import PushPinIcon from '@mui/icons-material/PushPin';
 
 interface PriceCard {
   type: "currency" | "crypto" | "commodity";
@@ -241,7 +242,19 @@ import { Tabs, Tab, Box } from "@mui/material";
 
 export default function PricesPage() {
   const [selectedTab, setSelectedTab] = useState(0);
+  const [pinnedItems, setPinnedItems] = useState<Set<string>>(new Set());
 
+  const togglePin = (abbreviation: string) => {
+    setPinnedItems(prev => {
+      const newPinned = new Set(prev);
+      if (newPinned.has(abbreviation)) {
+        newPinned.delete(abbreviation);
+      } else {
+        newPinned.add(abbreviation);
+      }
+      return newPinned;
+    });
+  };
   const filteredData = () => {
     switch (selectedTab) {
       case 0:
@@ -283,7 +296,7 @@ export default function PricesPage() {
         {filteredData().map((item, index) => (
           <div
             key={index}
-            className="w-[clac(50% - 4px)] aspect-square rounded-[28px] bg-gray-100 p-5 flex flex-col justify-between"
+            className="relative w-[clac(50% - 4px)] aspect-square rounded-[28px] bg-gray-100 p-5 flex flex-col justify-between"
           >
             <div className="flex items-center justify-between">
 
@@ -323,6 +336,16 @@ export default function PricesPage() {
                   {formatLargeNumber(item.price)}
                 </span>
               </div>
+            </div>
+            <div className="absolute bottom-6 right-4">
+              <PushPinIcon 
+                onClick={() => togglePin(item.abbreviation)}
+                className={`cursor-pointer transition-colors ${
+                  pinnedItems.has(item.abbreviation) 
+                    ? 'text-blue-500' 
+                    : 'text-gray-400 hover:text-gray-500'
+                }`}
+              />
             </div>
           </div>
         ))}

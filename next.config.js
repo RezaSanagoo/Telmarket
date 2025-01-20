@@ -8,7 +8,7 @@
   })
 
   module.exports = withPWA({
-    output: 'export',
+    output: 'standalone',
   basePath: '/Telmarket',
   images: {
     unoptimized: true,

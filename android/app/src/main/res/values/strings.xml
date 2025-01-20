@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Moj</string>
+    <string name="title_activity_main">Moj</string>
+    <string name="package_name">com.mojapp.nextbuild</string>
+    <string name="custom_url_scheme">com.mojapp.nextbuild</string>
+</resources>

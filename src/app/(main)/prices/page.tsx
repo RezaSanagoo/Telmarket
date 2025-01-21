@@ -1,9 +1,13 @@
 "use client";
+import { useState, useEffect } from "react";
 
+import { Tabs, Tab, Box } from "@mui/material";
 import ArrowUpRoundedIcon from "@mui/icons-material/KeyboardDoubleArrowUpRounded";
 import Time from "@mui/icons-material/TimelineRounded";
 import Image from "next/image";
-import PushPinIcon from '@mui/icons-material/PushPin';
+import PushPinIcon from "@mui/icons-material/PushPin";
+import RefreshIcon from "@mui/icons-material/Refresh";
+
 
 interface PriceCard {
   type: "currency" | "crypto" | "commodity";
@@ -236,14 +240,21 @@ const priceData: PriceCard[] = [
 ];
 
 
-
-import { useState } from "react";
-import { Tabs, Tab, Box } from "@mui/material";
-
 export default function PricesPage() {
   const [selectedTab, setSelectedTab] = useState(0);
-  const [pinnedItems, setPinnedItems] = useState<Set<string>>(new Set());
+  const [pinnedItems, setPinnedItems] = useState<Set<string>>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('pinnedItems');
+      return new Set(saved ? JSON.parse(saved) : []);
+    }
+    return new Set();
+  });
 
+  useEffect(() => {
+    const pinnedArray = Array.from(pinnedItems);
+    localStorage.setItem('pinnedItems', JSON.stringify(pinnedArray));
+  }, [pinnedItems]);
+  
   const togglePin = (abbreviation: string) => {
     setPinnedItems(prev => {
       const newPinned = new Set(prev);
@@ -255,41 +266,66 @@ export default function PricesPage() {
       return newPinned;
     });
   };
+
   const filteredData = () => {
+    let items;
     switch (selectedTab) {
       case 0:
-        return priceData.slice(0, 10); // Top 10 Currencies
+        items = priceData.slice(0, 10);
+        break;
       case 1:
-        return priceData.slice(10, 20); // Top 10 Cryptocurrencies
+        items = priceData.slice(10, 20);
+        break;
       case 2:
-        return priceData.slice(20, 25); // Commodities
+        items = priceData.slice(20, 25);
+        break;
       default:
-        return priceData;
+        items = priceData;
     }
+
+    return [...items].sort((a, b) => {
+      const isPinnedA = pinnedItems.has(a.abbreviation);
+      const isPinnedB = pinnedItems.has(b.abbreviation);
+      if (isPinnedA && !isPinnedB) return -1;
+      if (!isPinnedA && isPinnedB) return 1;
+      return 0;
+    });
   };
 
   return (
     <div className="w-full p-4 flex flex-col ">
       <div className="fixed bg-white w-full p-4 pt-6 pb-0 right-0 top-[56px] z-50">
-      <div className="font-bold text-xl flex items-center gap-2">
-        <Time className="text-2xl"/>
-        قیمت لحظه‌ای
-        <sub className="text-[12px] font-bold">(تومان)</sub>
-      </div>
+        <div className="font-bold text-xl flex items-center justify-between w-full">
+          <div className="flex items-center gap-2">
+            <Time className="text-2xl" />
+            قیمت لحظه‌ای
+            <sub className="text-[12px] font-bold">(تومان)</sub>
+          </div>
 
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', pb: '0px' }}>
-        <Tabs  
-          value={selectedTab} 
-          onChange={(_, newValue) => setSelectedTab(newValue)}
-          variant="fullWidth"
-          textColor="primary"
-          indicatorColor="primary"
-        >
-          <Tab label="ارزها" />
-          <Tab label="رمزارزها" />
-          <Tab label="دارایی‌ها" />
-        </Tabs>
-      </Box>
+          <button
+            onClick={() => {
+              // لاجیک نزدم تا ای پی ای وصل کنیم 
+            }}
+            className="flex items-center gap-1 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 rounded-full transition-all duration-300 text-blue-600"
+          >
+            <span className="text-sm">بروزرسانی</span>
+            <RefreshIcon className="text-xl" />
+          </button>
+        </div>
+
+        <Box sx={{ borderBottom: 1, borderColor: "divider", pb: "0px" }}>
+          <Tabs
+            value={selectedTab}
+            onChange={(_, newValue) => setSelectedTab(newValue)}
+            variant="fullWidth"
+            textColor="primary"
+            indicatorColor="primary"
+          >
+            <Tab label="ارزها" />
+            <Tab label="رمزارزها" />
+            <Tab label="دارایی‌ها" />
+          </Tabs>
+        </Box>
       </div>
 
       <div className="grid grid-cols-2 gap-x-2 gap-y-2 mt-[101px]">
@@ -299,22 +335,21 @@ export default function PricesPage() {
             className="relative w-[clac(50% - 4px)] aspect-square rounded-[28px] bg-gray-100 p-5 flex flex-col justify-between"
           >
             <div className="flex items-center justify-between">
-
-            <div className="h-8">
-              <h3 className="font-IRANYekan text-sm font-extrabold leading-4 text-right text-black">
-                {item.title}
-              </h3>
-              <span className="font-IRANYekan text-xs font-bold leading-4 text-right text-[#454343]">
-                {item.abbreviation}
-              </span>
-            </div>
-            <Image
-              src={item.icon}
-              alt={item.title}
-              className="w-[32px] h-[32px]"
-              width={32}
-              height={32}
-            />
+              <div className="h-8">
+                <h3 className="font-IRANYekan text-sm font-extrabold leading-4 text-right text-black">
+                  {item.title}
+                </h3>
+                <span className="font-IRANYekan text-xs font-bold leading-4 text-right text-[#454343]">
+                  {item.abbreviation}
+                </span>
+              </div>
+              <Image
+                src={item.icon}
+                alt={item.title}
+                className="w-[32px] h-[32px]"
+                width={32}
+                height={32}
+              />
             </div>
 
             <div className="flex flex-col items-end ">
@@ -338,12 +373,12 @@ export default function PricesPage() {
               </div>
             </div>
             <div className="absolute bottom-6 right-4">
-              <PushPinIcon 
+              <PushPinIcon
                 onClick={() => togglePin(item.abbreviation)}
                 className={`cursor-pointer transition-colors ${
-                  pinnedItems.has(item.abbreviation) 
-                    ? 'text-blue-500' 
-                    : 'text-gray-400 hover:text-gray-500'
+                  pinnedItems.has(item.abbreviation)
+                    ? "text-blue-500"
+                    : "text-gray-400 hover:text-gray-500"
                 }`}
               />
             </div>
@@ -353,7 +388,3 @@ export default function PricesPage() {
     </div>
   );
 }
-
-
-
-

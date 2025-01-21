@@ -1,9 +1,10 @@
 "use client";
-
-import AiButton from "./AiButton";
+import { useState } from "react";
+import Button from "./Button";
 import TestButton from "./TestButton";
 import CourseHeader from "./CourseHeader";
 import Image from "next/image";
+import ChatBotModal from "./ChatBotModal";
 
 const coursePosts = [
   {
@@ -31,6 +32,7 @@ const courseInfo = {
 };
 
 export default function CourseContent({}: { id: string }) {
+  const [isChatOpen, setIsChatOpen] = useState(false);
   return (
     <div className="flex flex-col h-full">
       <CourseHeader {...courseInfo} />
@@ -38,10 +40,10 @@ export default function CourseContent({}: { id: string }) {
         <div className="max-w-[60rem] w-full">
           {coursePosts.map((item) => (
             <div
-                key={item.id} className="w-full flex flex-col items-end mb-4 gap-1">
-              <div
-                className="relative rounded-xl bg-[#00000010] rounded-ee rounded-es border border-gray-200 font-IRANYekan py-1 w-11/12"
-              >
+              key={item.id}
+              className="w-full flex flex-col items-end mb-4 gap-1"
+            >
+              <div className="relative rounded-xl bg-[#00000010] rounded-ee rounded-es border border-gray-200 font-IRANYekan py-1 w-11/12">
                 <h4 className="mb-2 text-sm px-3 font-bold">{item.title}</h4>
                 <Image
                   src={item.file}
@@ -62,13 +64,16 @@ export default function CourseContent({}: { id: string }) {
                 </span>
               </div>
               <div className="flex items-center gap-1 w-11/12">
-                <AiButton />
+                <div onClick={() => setIsChatOpen(true)}>
+                  <Button />
+                </div>
                 <TestButton />
               </div>
             </div>
           ))}
         </div>
       </div>
+      <ChatBotModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </div>
   );
 }

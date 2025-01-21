@@ -32,7 +32,7 @@ export default function BottomNav() {
         padding: "8px",
         paddingTop: "0px",
         fontWeight: "bold",
-        zIndexIndex: 1000,
+        zIndexIndex: 10000,
         "& .MuiSvgIcon-root": {
           fontSize: "24px",
           fontWeight: "bold",

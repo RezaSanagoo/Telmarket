@@ -20,6 +20,7 @@ export const config = {
     '/settings',
     '/notifications',
     '/transactions',
-    '/market'
+    '/market',
+    '/courses',
   ]
 }

@@ -1,33 +1,36 @@
 "use client";
-import { Box, Tabs, Tab, CircularProgress, Button } from "@mui/material";
-import Graph from '@mui/icons-material/AutoGraphRounded';
+
 import { useState } from "react";
 
+import { Box, Tabs, Tab, CircularProgress, Button } from "@mui/material";
+import Graph from "@mui/icons-material/AutoGraphRounded";
+import EditProfileModal from "@/components/EditProfileModal";
 interface CourseProgress {
-  id: number
-  title: string
-  progress: number
-  description: string
+  id: number;
+  title: string;
+  progress: number;
+  description: string;
 }
 
 const courseData: CourseProgress[] = [
   {
     id: 1,
-    title: 'آموزش ری‌اکت',
-    description: 'از صفر تا صد ری‌اکت به همراه پروژه‌های کاربردی',
+    title: "آموزش ری‌اکت",
+    description: "از صفر تا صد ری‌اکت به همراه پروژه‌های کاربردی",
     progress: 85,
   },
   {
     id: 2,
-    title: 'برنامه‌نویسی پایتون',
-    description: 'دوره جامع پایتون برای توسعه نرم‌افزار و هوش مصنوعی',
+    title: "برنامه‌نویسی پایتون",
+    description: "دوره جامع پایتون برای توسعه نرم‌افزار و هوش مصنوعی",
     progress: 45,
   },
-]
+];
 
 export default function ProfilePage() {
-  const [selectedTab, setSelectedTab] = useState(0)
-  
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   return (
     <div className="flex flex-col p-6 gap-4">
       <div className="flex justify-between">
@@ -53,7 +56,10 @@ export default function ProfilePage() {
 
         <div className="w-[1px] bg-[#1A8BC4]"></div>
 
-        <Button className="flex items-center text-sm p-3 text-[#1A8BC4] font-bold">
+        <Button
+          className="flex items-center text-sm p-3 text-[#1A8BC4] font-bold"
+          onClick={() => setIsEditModalOpen(true)}
+        >
           ویرایش پروفایل
         </Button>
       </div>
@@ -63,25 +69,25 @@ export default function ProfilePage() {
           <Graph className="text-2xl" />
           <h2 className="font-bold text-[20px] text-right">چشم‌انداز شما</h2>
         </div>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider', pb: '0px' }}>
-        <Tabs
-          value={selectedTab}
-          onChange={(_, newValue) => setSelectedTab(newValue)}
-          variant="scrollable"
-          scrollButtons
-          dir="rtl"
-          textColor="primary"
-          indicatorColor="primary"
-          sx={{
-            '& .MuiTabs-scrollButtons': {
-              transform: 'scaleX(-1)'
-            }
-          }}
-        >
-          {courseData.map(course => (
-            <Tab key={course.id} label={course.title} />
-          ))}
-        </Tabs>
+        <Box sx={{ borderBottom: 1, borderColor: "divider", pb: "0px" }}>
+          <Tabs
+            value={selectedTab}
+            onChange={(_, newValue) => setSelectedTab(newValue)}
+            variant="scrollable"
+            scrollButtons
+            dir="rtl"
+            textColor="primary"
+            indicatorColor="primary"
+            sx={{
+              "& .MuiTabs-scrollButtons": {
+                transform: "scaleX(-1)",
+              },
+            }}
+          >
+            {courseData.map((course) => (
+              <Tab key={course.id} label={course.title} />
+            ))}
+          </Tabs>
         </Box>
       </div>
 
@@ -101,19 +107,31 @@ export default function ProfilePage() {
           </p>
         </div>
       </div>
-      
+
       <p className="text-xs font-bold text-right">
         {courseData[selectedTab].description}
       </p>
 
       <div className="flex gap-4">
-        <Button variant="contained" disableElevation className="flex-grow p-2 rounded-[8px] bg-[#1A8BC4] text-white">
+        <Button
+          variant="contained"
+          disableElevation
+          className="flex-grow p-2 rounded-[8px] bg-[#1A8BC4] text-white"
+        >
           دکمه اول
         </Button>
-        <Button variant="contained" disableElevation className="flex-grow p-2 rounded-[8px] border bg-[#1A8BC4] text-white">
+        <Button
+          variant="contained"
+          disableElevation
+          className="flex-grow p-2 rounded-[8px] border bg-[#1A8BC4] text-white"
+        >
           دکمه دوم
         </Button>
       </div>
+      <EditProfileModal
+        open={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+      />
     </div>
   );
 }

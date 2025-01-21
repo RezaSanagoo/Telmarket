@@ -40,7 +40,10 @@ export default function CourseContent({ course }: { course?: Course }) {
           {course?.description}
         </Typography>
       </div>
-      <IconButton onClick={handleClick}>
+      <IconButton
+  onClick={handleClick}
+  style={{ zIndex: 1000, pointerEvents: "auto", background: "red" }}
+>
         <MoreVertIcon />
       </IconButton>
       <Popover

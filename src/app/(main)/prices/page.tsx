@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 
-import { Tabs, Tab, Box } from "@mui/material";
+import { Tabs, Tab, Box, IconButton } from "@mui/material";
 import ArrowUpRoundedIcon from "@mui/icons-material/KeyboardDoubleArrowUpRounded";
 import Time from "@mui/icons-material/TimelineRounded";
 import Image from "next/image";
@@ -329,7 +329,7 @@ export default function PricesPage() {
       </div>
       <AnimatePresence mode="popLayout">
         <motion.div
-          className="grid grid-cols-2 gap-x-2 gap-y-2 mt-[101px]"
+          className="grid lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 gap-x-2 gap-y-2 mt-[101px]"
           layout
         >
           {filteredData().map((item, index) => (
@@ -345,7 +345,7 @@ export default function PricesPage() {
                 damping: 50,
                 mass: 1,
               }}
-              className="relative w-[clac(50% - 4px)] aspect-square rounded-[28px] bg-gray-100 p-5 flex flex-col justify-between"
+              className="relative w-[clac(50% - 4px)] xs:aspect-square rounded-[28px] bg-gray-100 p-5 flex flex-col justify-between max-xs:gap-6"
             >
               <div className="flex items-center justify-between">
                 <div className="h-8">
@@ -369,23 +369,28 @@ export default function PricesPage() {
                 <div className="flex items-center gap-[6px]">
                   <span
                     className={` transition-transform
-                  ${item.change < 0 ? "text-[#F80000]" : "text-[#00C853]"} text-[22px] font-black pt-1`}
+                  ${item.change < 0 ? "text-[#F80000]" : "text-[#00C853]"} sm:text-[22px] text-[16px] font-black pt-1`}
                   >
                     {formatLargeNumber(Math.abs(item.change))}
                   </span>
                   <ArrowUpRoundedIcon
                     className={` transition-transform
-                  ${item.change < 0 ? "rotate-180 text-[#F80000]" : "text-[#00C853]"} text-3xl mx-[-8px]`}
+                  ${item.change < 0 ? "rotate-180 text-[#F80000]" : "text-[#00C853]"} sm:text-3xl text-xl sm:mx-[-8px] mx-[-4 px]`}
                   />
                 </div>
 
                 <div className="">
-                  <span className="font-IRANYekan text-[32px] font-black leading-[36px] text-black">
+                  <span className="font-IRANYekan sm:text-[32px] text-[28px] font-black sm:leading-[36px] leading-[32px] text-black">
                     {formatLargeNumber(item.price)}
                   </span>
                 </div>
               </div>
-              <div className="absolute bottom-6 right-4">
+              <div className="absolute bottom-4 right-4">
+              <IconButton
+            size="large"
+            color="inherit"
+            sx={{width: 36, height: 36,}}
+          >
                 <PushPinIcon
                   onClick={() => togglePin(item.abbreviation)}
                   className={`cursor-pointer transition-colors ${
@@ -394,6 +399,7 @@ export default function PricesPage() {
                       : "text-gray-400 hover:text-gray-500"
                   }`}
                 />
+              </IconButton>
               </div>
             </motion.div>
           ))}

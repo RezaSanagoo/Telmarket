@@ -8,6 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': '385px'
+      },
       keyframes: {
         fadeIn: {
           from: { opacity: 0 },

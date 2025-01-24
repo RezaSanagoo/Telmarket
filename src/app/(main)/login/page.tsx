@@ -19,6 +19,37 @@ import {
 } from "@mui/material";
 import { LockOutlined } from "@mui/icons-material";
 
+const inputStyles = {
+  "& .MuiOutlinedInput-root": {
+    direction: "rtl",
+    textAlign: "right",
+  },
+  "& .MuiInputLabel-root": {
+    direction: "rtl",
+    right: 25,
+    left: "auto",
+    transformOrigin: "top right",
+    "&.Mui-focused": {
+      right: 14,
+      transform: "translate(0, -1.5px) scale(0.75)",
+      top: -8
+    },
+  },
+  "& .MuiInputLabel-shrink": {
+    transform: "translate(0, -1.5px) scale(0.75)",
+    right: 14,
+    top: -8
+  },
+  "& .MuiOutlinedInput-notchedOutline": {
+    textAlign: "right",
+    direction: "rtl",
+  },
+  "& legend": {
+    textAlign: "right",
+    direction: "rtl",
+  }
+};
+
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -53,6 +84,7 @@ export default function Login() {
         maxAge: 60 * 60 * 24,
         path: "/",
       });
+      router.push("/");
 
       // For the error handling, properly type the catch block
     } catch (err: unknown) {
@@ -103,6 +135,7 @@ export default function Login() {
               autoComplete="email"
               autoFocus
               type="email"
+              sx={inputStyles}
             />
 
             <TextField
@@ -114,6 +147,7 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              sx={inputStyles}
             />
 
             <Button

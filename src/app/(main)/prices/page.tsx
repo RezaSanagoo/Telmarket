@@ -7,7 +7,8 @@ import Time from "@mui/icons-material/TimelineRounded";
 import Image from "next/image";
 import PushPinIcon from "@mui/icons-material/PushPin";
 import RefreshIcon from "@mui/icons-material/Refresh";
-
+import { motion } from "motion/react";
+import { AnimatePresence } from "motion/react";
 
 interface PriceCard {
   type: "currency" | "crypto" | "commodity";
@@ -239,12 +240,11 @@ const priceData: PriceCard[] = [
   },
 ];
 
-
 export default function PricesPage() {
   const [selectedTab, setSelectedTab] = useState(0);
   const [pinnedItems, setPinnedItems] = useState<Set<string>>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('pinnedItems');
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("pinnedItems");
       return new Set(saved ? JSON.parse(saved) : []);
     }
     return new Set();
@@ -252,11 +252,11 @@ export default function PricesPage() {
 
   useEffect(() => {
     const pinnedArray = Array.from(pinnedItems);
-    localStorage.setItem('pinnedItems', JSON.stringify(pinnedArray));
+    localStorage.setItem("pinnedItems", JSON.stringify(pinnedArray));
   }, [pinnedItems]);
-  
+
   const togglePin = (abbreviation: string) => {
-    setPinnedItems(prev => {
+    setPinnedItems((prev) => {
       const newPinned = new Set(prev);
       if (newPinned.has(abbreviation)) {
         newPinned.delete(abbreviation);
@@ -304,7 +304,7 @@ export default function PricesPage() {
 
           <button
             onClick={() => {
-              // لاجیک نزدم تا ای پی ای وصل کنیم 
+              // لاجیک نزدم تا ای پی ای وصل کنیم
             }}
             className="flex items-center gap-1 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 rounded-full transition-all duration-300 text-blue-600"
           >
@@ -327,64 +327,78 @@ export default function PricesPage() {
           </Tabs>
         </Box>
       </div>
-
-      <div className="grid grid-cols-2 gap-x-2 gap-y-2 mt-[101px]">
-        {filteredData().map((item, index) => (
-          <div
-            key={index}
-            className="relative w-[clac(50% - 4px)] aspect-square rounded-[28px] bg-gray-100 p-5 flex flex-col justify-between"
-          >
-            <div className="flex items-center justify-between">
-              <div className="h-8">
-                <h3 className="font-IRANYekan text-sm font-extrabold leading-4 text-right text-black">
-                  {item.title}
-                </h3>
-                <span className="font-IRANYekan text-xs font-bold leading-4 text-right text-[#454343]">
-                  {item.abbreviation}
-                </span>
-              </div>
-              <Image
-                src={item.icon}
-                alt={item.title}
-                className="w-[32px] h-[32px]"
-                width={32}
-                height={32}
-              />
-            </div>
-
-            <div className="flex flex-col items-end ">
-              <div className="flex items-center gap-[6px]">
-                <span
-                  className={` transition-transform
-                  ${item.change < 0 ? "text-[#F80000]" : "text-[#00C853]"} text-[22px] font-black pt-1`}
-                >
-                  {formatLargeNumber(Math.abs(item.change))}
-                </span>
-                <ArrowUpRoundedIcon
-                  className={` transition-transform
-                  ${item.change < 0 ? "rotate-180 text-[#F80000]" : "text-[#00C853]"} text-3xl mx-[-8px]`}
+      <AnimatePresence mode="popLayout">
+        <motion.div
+          className="grid grid-cols-2 gap-x-2 gap-y-2 mt-[101px]"
+          layout
+        >
+          {filteredData().map((item, index) => (
+            <motion.div
+              key={item.abbreviation}
+              layout
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{
+                type: "spring",
+                stiffness: 500,
+                damping: 50,
+                mass: 1,
+              }}
+              className="relative w-[clac(50% - 4px)] aspect-square rounded-[28px] bg-gray-100 p-5 flex flex-col justify-between"
+            >
+              <div className="flex items-center justify-between">
+                <div className="h-8">
+                  <h3 className="font-IRANYekan text-sm font-extrabold leading-4 text-right text-black">
+                    {item.title}
+                  </h3>
+                  <span className="font-IRANYekan text-xs font-bold leading-4 text-right text-[#454343]">
+                    {item.abbreviation}
+                  </span>
+                </div>
+                <Image
+                  src={item.icon}
+                  alt={item.title}
+                  className="w-[32px] h-[32px]"
+                  width={32}
+                  height={32}
                 />
               </div>
 
-              <div className="">
-                <span className="font-IRANYekan text-[32px] font-black leading-[36px] text-black">
-                  {formatLargeNumber(item.price)}
-                </span>
+              <div className="flex flex-col items-end ">
+                <div className="flex items-center gap-[6px]">
+                  <span
+                    className={` transition-transform
+                  ${item.change < 0 ? "text-[#F80000]" : "text-[#00C853]"} text-[22px] font-black pt-1`}
+                  >
+                    {formatLargeNumber(Math.abs(item.change))}
+                  </span>
+                  <ArrowUpRoundedIcon
+                    className={` transition-transform
+                  ${item.change < 0 ? "rotate-180 text-[#F80000]" : "text-[#00C853]"} text-3xl mx-[-8px]`}
+                  />
+                </div>
+
+                <div className="">
+                  <span className="font-IRANYekan text-[32px] font-black leading-[36px] text-black">
+                    {formatLargeNumber(item.price)}
+                  </span>
+                </div>
               </div>
-            </div>
-            <div className="absolute bottom-6 right-4">
-              <PushPinIcon
-                onClick={() => togglePin(item.abbreviation)}
-                className={`cursor-pointer transition-colors ${
-                  pinnedItems.has(item.abbreviation)
-                    ? "text-blue-500"
-                    : "text-gray-400 hover:text-gray-500"
-                }`}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
+              <div className="absolute bottom-6 right-4">
+                <PushPinIcon
+                  onClick={() => togglePin(item.abbreviation)}
+                  className={`cursor-pointer transition-colors ${
+                    pinnedItems.has(item.abbreviation)
+                      ? "text-blue-500"
+                      : "text-gray-400 hover:text-gray-500"
+                  }`}
+                />
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }

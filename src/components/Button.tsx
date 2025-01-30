@@ -19,7 +19,7 @@ const Button = () => {
           <i className="point" />
         </div>
         <span className="inner"><svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5">
-            <polyline points="13.18 1.37 13.18 9.64 21.45 9.64 10.82 22.63 10.82 14.36 2.55 14.36 13.18 1.37" /></svg>از هوش مصنوعی بپرسید</span>
+            <polyline points="13.18 1.37 13.18 9.64 21.45 9.64 10.82 22.63 10.82 14.36 2.55 14.36 13.18 1.37" /></svg>  هوش مصنوعی</span>
       </button>
     </StyledWrapper>
   );
@@ -27,9 +27,9 @@ const Button = () => {
 
 const StyledWrapper = styled.div`
   .button {
-    --h-button: 48px;
+    --h-button: 42px;
     --w-button: 102px;
-    --round: 1rem;
+    --round: .25rem;
     cursor: pointer;
     position: relative;
     display: inline-flex;
@@ -46,7 +46,10 @@ const StyledWrapper = styled.div`
     border-radius: var(--round);
     border: none;
     outline: none;
-    padding: 12px 10px;
+    padding: 12px 0px;
+    height: var(--h-button);
+    width: 100%;
+    border-end-start-radius: 0.75rem;
   }
   .button::before,
   .button::after {
@@ -54,7 +57,7 @@ const StyledWrapper = styled.div`
     position: absolute;
     inset: var(--space);
     transition: all 0.5s ease-in-out;
-    border-radius: calc(var(--round) - var(--space));
+    border-radius: var(--round));
     z-index: 0;
   }
   .button::before {
@@ -93,7 +96,7 @@ const StyledWrapper = styled.div`
       rgba(223, 113, 255, 0) 100%
     );
     box-shadow: 0 0 3px black;
-    border-bottom-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.25rem;
     border-top-right-radius: var(--round);
   }
   .fold::after {
@@ -211,15 +214,15 @@ const StyledWrapper = styled.div`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
-    line-height: 1.5;
     transition: color 0.2s ease-in-out;
+
   }
 
   .inner svg.icon {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     transition: fill 0.1s linear;
   }
 

@@ -3,8 +3,9 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
-import { setCookie } from "cookies-next";
 import axios from "axios";
+import { IconButton } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import Image from "next/image";
 
@@ -13,15 +14,12 @@ import logo from "../../../../public/img/LogoT.png";
 import {
   Container,
   Box,
-  Avatar,
   Typography,
   TextField,
   Button,
-  Paper,
   Snackbar,
   Alert,
 } from "@mui/material";
-import { LockOutlined } from "@mui/icons-material";
 
 const inputStyles = {
   "& .MuiOutlinedInput-root": {
@@ -58,6 +56,7 @@ const inputStyles = {
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -65,39 +64,32 @@ export default function Login() {
     setLoading(true);
 
     const formData = new FormData(event.currentTarget);
-    const email = formData.get("email");
-    const password = formData.get("password");
+    const loginData = {
+      email: formData.get("email"),
+      password: formData.get("password"),
+    };
 
     try {
-      // Add interface for the API response
-      interface LoginResponse {
-        access: string;
-        refresh: string;
-      }
-
-      // Update the axios call with proper typing
-      const res = await axios.post<LoginResponse>(
-        "https://alisadeqi.pythonanywhere.com/api/account/login/",
-        { email, password },
+      const res = await axios.post(
+        "https://test22.liara.run/api/account/login/",
+        loginData,
         {
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
 
-      // Now we can access res.data.access
-      setCookie("token", res.data.access, {
-        maxAge: 60 * 60 * 24,
-        path: "/",
-      });
+      localStorage.setItem("token", JSON.stringify(res.data));
       router.push("/");
-
-      // For the error handling, properly type the catch block
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.message || "خطا در ورود");
       } else {
-        setError("An unknown error occurred");
+        setError("خطای غیرمنتظره");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -170,7 +162,7 @@ export default function Login() {
               ...inputStyles,
               "& .MuiOutlinedInput-root": {
                 ...inputStyles["& .MuiOutlinedInput-root"],
-                borderRadius: "12px",
+                borderRadius: "12 px",
               },
             }}
             className="font-bold rounded-xl"
@@ -182,16 +174,17 @@ export default function Login() {
             fullWidth
             name="password"
             label="رمز عبور"
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
             autoComplete="current-password"
-            sx={{
-              ...inputStyles,
-              "& .MuiOutlinedInput-root": {
-                ...inputStyles["& .MuiOutlinedInput-root"],
-                borderRadius: "12px",
-              },
+            InputProps={{
+              endAdornment: (
+                <IconButton onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              ),
             }}
+            sx={inputStyles}
             className="font-bold rounded-xl"
           />
 

@@ -12,7 +12,8 @@ export default function AuthCheck() {
     if (!token) {
       router.push('/login')
     }
-  }, [])
+  }, [router])
+  
 
   return null
 }

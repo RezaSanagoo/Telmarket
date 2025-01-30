@@ -1,10 +1,19 @@
 "use client";
 
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import { Box, Tabs, Tab, CircularProgress, Button } from "@mui/material";
 import Graph from "@mui/icons-material/AutoGraphRounded";
 import EditProfileModal from "@/components/EditProfileModal";
+import axios from "axios";
+import { motion } from "motion/react";
+
+interface StudentInfo {
+  purchased_channels: string[];
+  sex: string;
+  age: number;
+  city: string;
+}
+
 interface CourseProgress {
   id: number;
   title: string;
@@ -12,31 +21,72 @@ interface CourseProgress {
   description: string;
 }
 
+
 const courseData: CourseProgress[] = [
   {
     id: 1,
-    title: "آموزش ری‌اکت",
-    description: "از صفر تا صد ری‌اکت به همراه پروژه‌های کاربردی",
-    progress: 85,
+    title: "مبانی سرمایه‌گذاری در بورس",
+    description: "آشنایی با مفاهیم اولیه و تکنیک‌های سرمایه‌گذاری در بازار بورس",
+    progress: 42,
   },
   {
     id: 2,
-    title: "برنامه‌نویسی پایتون",
-    description: "دوره جامع پایتون برای توسعه نرم‌افزار و هوش مصنوعی",
-    progress: 45,
+    title: "تحلیل تکنیکال پیشرفته",
+    description: "بررسی ابزارها و استراتژی‌های حرفه‌ای تحلیل تکنیکال در بازارهای مالی",
+    progress: 80,
+  },
+  {
+    id: 3,
+    title: "مدیریت ریسک و سرمایه‌گذاری",
+    description: "اصول مدیریت ریسک و تدوین استراتژی‌های معاملاتی کم‌ریسک",
+    progress: 65,
   },
 ];
 
 export default function ProfilePage() {
   const [selectedTab, setSelectedTab] = useState(0);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [studentInfo, setStudentInfo] = useState<StudentInfo | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStudentInfo = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) throw new Error("No token found");
+
+        const { data } = await axios.get(
+          "https://test22.liara.run/api/account/student-info/",
+          {
+            headers: {
+              Authorization: `Bearer ${JSON.parse(token).access}`,
+              "Content-Type": "application/json"
+            }
+          }
+        );
+        setStudentInfo(data);
+      } catch (error) {
+        console.error("Failed to fetch student info:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStudentInfo();
+  }, []);
 
   return (
     <div className="flex flex-col p-6 gap-4">
+      {loading ? (
+        <div className="flex justify-center">
+          <CircularProgress />
+        </div>
+      ) : (
+        <>
       <div className="flex justify-between">
         <div className="flex flex-col gap-2">
           <h2 className="text-[20px] font-bold text-right text-black">
-            رضا ثناگو
+            نام و نام خانوادگی
           </h2>
           <p className="text-xs text-[#2E2E2E]">Rezasa***@gmail.com</p>
         </div>
@@ -45,24 +95,39 @@ export default function ProfilePage() {
           <p className="text-xs text-[#2E2E2E]">آخرین بروزرسانی</p>
           <p className="text-xs text-[#2E2E2E]">۱۸:۰۷ ۱۴۰۳/۱۰/۲۳</p>
         </div>
+        
       </div>
 
-      <div className=" bg-[rgba(26,139,196,0.05)] border border-[#1A8BC4] rounded-[10px] flex items-stretch">
-        <div className="flex-1 p-3">
-          <p className="text-[rgba(0,0,0,0.74)] text-sm">
-            پروفایل خود را تکمیل کنید.
-          </p>
-        </div>
+      {studentInfo && (!studentInfo.age || !studentInfo.city || !studentInfo.sex) && (
+  <motion.div 
+    initial={{ x: -100, opacity: 0 }}
+    animate={{ x: 0, opacity: 1 }}
+    transition={{ 
+      type: "spring",
+      stiffness: 100,
+      damping: 10,
+      mass: 0.75
+    }}
+    className="bg-[rgba(26,139,196,0.05)] border border-[#1A8BC4] rounded-[10px] flex items-stretch"
+  >
+    <div className="flex-1 p-3">
+      <p className="text-[rgba(0,0,0,0.74)] text-sm">
+        پروفایل خود را تکمیل کنید.
+      </p>
+    </div>
 
-        <div className="w-[1px] bg-[#1A8BC4]"></div>
+    <div className="w-[1px] bg-[#1A8BC4]"></div>
 
-        <Button
-          className="flex items-center text-sm p-3 text-[#1A8BC4] font-bold"
-          onClick={() => setIsEditModalOpen(true)}
-        >
-          ویرایش پروفایل
-        </Button>
-      </div>
+    <Button
+      className="flex items-center text-sm p-3 text-[#1A8BC4] font-bold"
+      onClick={() => setIsEditModalOpen(true)}
+    >
+      ویرایش پروفایل
+    </Button>
+  </motion.div>
+)}
+
+
 
       <div className="flex flex-col gap-2">
         <div className="font-bold text-xl flex items-center gap-2">
@@ -132,6 +197,8 @@ export default function ProfilePage() {
         open={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
       />
+    </>
+      )}
     </div>
   );
 }

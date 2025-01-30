@@ -29,7 +29,7 @@ export default function MainAppBar() {
   //     case '/profile':
   //       return 'پروفایل'
   //     default:
-  //       return 'تل‌مارکت'
+  //       return ''
   //   }
   // }
 
@@ -70,7 +70,7 @@ export default function MainAppBar() {
           <div className="flex items-center justify-center gap-1">
           <Image
             src={logo.src} 
-            alt="TelMarket"
+            alt="Moj"
             width={56} // Adjust based on your logo's dimensions
             height={56} // Adjust based on your logo's dimensions
             className="p-1"

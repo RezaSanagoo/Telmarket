@@ -5,42 +5,42 @@
 
 @font-face {
     font-family: 'IRANYekan';
-    src: url('https://rezasanagoo.github.io/Telmarket/fonts/IRANYekanBlack.ttf') format('truetype');
+    src: url('/fonts/IRANYekanBlack.ttf') format('truetype');
     font-weight: 900;
     font-display: swap;
 }
 
 @font-face {
 font-family: 'IRANYekan';
-src: url('https://rezasanagoo.github.io/Telmarket/fonts/IRANYekanBold.ttf') format('truetype');
+src: url('/fonts/IRANYekanBold.ttf') format('truetype');
 font-weight: bold;
 font-display: swap;
 }
 
 @font-face {
   font-family: 'IRANYekan';
-  src: url('https://rezasanagoo.github.io/Telmarket/fonts/IRANYekanExtraBold.ttf') format('truetype');
+  src: url('/fonts/IRANYekanExtraBold.ttf') format('truetype');
   font-weight: 800;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'IRANYekan';
-  src: url('https://rezasanagoo.github.io/Telmarket/fonts/IRANYekanLight.ttf') format('truetype');
+  src: url('/fonts/IRANYekanLight.ttf') format('truetype');
   font-weight: 300;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'IRANYekan';
-  src: url('https://rezasanagoo.github.io/Telmarket/fonts/IRANYekanMedium.ttf') format('truetype');
+  src: url('/fonts/IRANYekanMedium.ttf') format('truetype');
   font-weight: 500;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'IRANYekan';
-  src: url('https://rezasanagoo.github.io/Telmarket/fonts/IRANYekanRegular.ttf') format('truetype');
+  src: url('/fonts/IRANYekanRegular.ttf') format('truetype');
   font-weight: normal;
   font-display: swap;
 }

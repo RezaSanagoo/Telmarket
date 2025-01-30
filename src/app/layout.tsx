@@ -1,26 +1,33 @@
-"use client";
+import type { Metadata, Viewport } from 'next'
 
-import { ReactNode } from "react";
-import "./globals.css";
-import { ThemeProvider } from "@mui/material/styles";
-import { theme } from "@/theme/theme";
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1
+}
+
+export const metadata: Metadata = {
+  title: 'موج',
+  description: 'پلتفرم آموزشی موج - دسترسی به دوره‌های آموزشی با کیفیت',
+  keywords: 'آموزش, دوره آنلاین, موج, یادگیری',
+  authors: [{ name: 'موج' }],
+  robots: {
+    index: false,
+    follow: false
+  },
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
+  manifest: '/manifest.json',
+}
 
 
-import AuthCheck from '@/components/AuthCheck'
+import ClientLayout from './ClientLayout'
 
-export default function RootLayout({ children }: { children: ReactNode }) {
-  return (
-    <html lang="fa" dir="rtl">
-      <head>
-        <link rel="manifest" href="/Telmarket/manifest.json" />
-        <meta name="theme-color" content="#fff" />
-      </head>
-      <body>
-        <ThemeProvider theme={theme}>
-          <AuthCheck />
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
-  );
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return <ClientLayout>{children}</ClientLayout>
 }

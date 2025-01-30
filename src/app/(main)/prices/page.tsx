@@ -332,7 +332,7 @@ export default function PricesPage() {
           className="grid lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 gap-x-2 gap-y-2 mt-[101px]"
           layout
         >
-          {filteredData().map((item, index) => (
+          {filteredData().map((item) => (
             <motion.div
               key={item.abbreviation}
               layout

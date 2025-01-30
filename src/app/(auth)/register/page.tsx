@@ -1,92 +1,258 @@
 "use client";
 
-import { Layout, theme, Watermark } from "antd";
-import ChatContent from "@/components/chat-content";
-import ChatHeader from "@/components/chat-header";
-import ChatMenu from "@/components/chat-menu";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useState } from "react";
 import axios from "axios";
+import { IconButton } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const { Header, Content, Sider } = Layout;
 
-const Dashboard = () => {
-  const [selected, setSelected] = useState<number | null>(null);
-  const [items, setItems] = useState<
-    { id: number; image: string; name: string }[]
-  >([]);
+import Image from "next/image";
+
+import logo from "../../../../public/img/LogoT.png";
+
+import {
+  Container,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Snackbar,
+  Alert,
+} from "@mui/material";
+
+const inputStyles = {
+  "& .MuiOutlinedInput-root": {
+    direction: "rtl",
+    textAlign: "right",
+    borderradius: "16px",
+  },
+  "& .MuiInputLabel-root": {
+    direction: "rtl",
+    right: 25,
+    left: "auto",
+    transformOrigin: "top right",
+    "&.Mui-focused": {
+      right: 14,
+      transform: "translate(0, -1.5px) scale(0.75)",
+      top: -8,
+    },
+  },
+  "& .MuiInputLabel-shrink": {
+    transform: "translate(0, -1.5px) scale(0.75)",
+    right: 14,
+    top: -8,
+  },
+  "& .MuiOutlinedInput-notchedOutline": {
+    textAlign: "right",
+    direction: "rtl",
+  },
+  "& legend": {
+    textAlign: "right",
+    direction: "rtl",
+  },
+};
+
+export default function Register() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const router = useRouter();
 
-  useEffect(() => {
-    let token: string | null = null;
-    if (window !== undefined) {
-      token = window.localStorage.getItem("token");
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+    
+    const formData = new FormData(event.currentTarget);
+    const password = formData.get("password");
+    const confirmPassword = formData.get("confirmPassword");
+    
+    if (password !== confirmPassword) {
+      setError("رمز عبور و تکرار آن مطابقت ندارند");
+      setLoading(false);
+      return;
     }
-    if (
-      !token ||
-      !(
-        JSON.parse(token).hasOwnProperty("access") &&
-        JSON.parse(token).hasOwnProperty("refresh")
-      )
-    ) {
-      window.localStorage.removeItem("token");
-      router.replace("/login");
-    } else {
-      axios
-        .get("https://alisadeqi.pythonanywhere.com/api/channel/detail", {
-          headers: {
-            Authorization: `Bearer ${JSON.parse(token).access}`,
-            "Cache-Control": "no-cache",
-          },
-        })
-        .then((res) => {
-          setItems(res.data);
-        });
-    }
-  }, [router]); // Add router to dependencies
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  
+    const registerData = {
+      email: formData.get("email"),
+      password: password
+    };
+  
+    axios.post(
+      "https://test22.liara.run/api/account/register/",
+      registerData,
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    )
+    .then((res) => {
+      localStorage.setItem("token", JSON.stringify(res.data));
+      router.push("/");
+    })
+    .catch((err) => {
+      setError(err.response?.data?.message || 'خطا در ثبت‌نام');
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+  };
+  
+  // Add this state for password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
 
   return (
-    <Layout style={{ height: "100dvh" }}>
-      <Sider className="close-in-mobile" theme="light">
-        <ChatMenu selected={selected} setSelected={setSelected} items={items} />
-      </Sider>
-      <Layout>
-        <Header
+    <Container component="main">
+      <Box
+        sx={{
+          minHeight: "40dvh",
+          display: "flex",
+          alignItems: "center",
+          position: "absolute",
+          justifyContent: "center",
+          backgroundImage: "url('./Tide.svg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          width: "100vw",
+          left: 0,
+          top: 0,
+          borderBottomLeftRadius: "20vw",
+        }}
+      >
+        <Image
+          src={logo.src}
+          alt="MojLogo"
+          width={206} // Adjust based on your logo's dimensions
+          height={206} // Adjust based on your logo's dimensions
+          className="p-1"
+          priority
           style={{
-            padding: 0,
-            background: colorBgContainer,
-            height: "inherit",
+            filter:
+              "brightness(0) invert(1) drop-shadow(2px 2px 2px #00000088)",
+            width: "25vh",
+            height: "25vh",
           }}
+        />
+      </Box>
+
+      <Box
+        sx={{
+          minHeight: "60dvh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          maxWidth: "400px",
+          margin: "0 auto",
+          marginTop: "40vh",
+        }}
+      >
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{ mt: 1 }}
+          className="flex flex-col justify-center items-center w-full"
         >
-          <ChatHeader
-            selectedChat={
-              selected ? items.filter((item) => item.id === selected)[0] : null
-            }
-          />
-        </Header>
-        <Watermark
-          content="Tele Market"
-          style={{ flex: 1 }}
-          gap={[50, 50]}
-          zIndex={0}
-        >
-          <Content
-            style={{
-              padding: "1.6rem",
-              position: "relative",
-              zIndex: 1,
-              height: "100%",
-              overflow: "auto"
+          <h2 className="text-2xl font-extrabold mb-4 text-[#4190FF]">
+            ثبت نام در مــوجــــ
+          </h2>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="ایمیل"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            type="email"
+            sx={{
+              ...inputStyles,
+              "& .MuiOutlinedInput-root": {
+                ...inputStyles["& .MuiOutlinedInput-root"],
+                borderRadius: "12 px",
+              },
             }}
+            className="font-bold rounded-xl"
+          />
+
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="رمز عبور"
+            type={showPassword ? "text" : "password"}
+            id="password"
+            autoComplete="new-password"
+            InputProps={{
+              endAdornment: (
+                <IconButton onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              ),
+            }}
+            sx={inputStyles}
+            className="font-bold rounded-xl"
+          />
+
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="confirmPassword"
+            label="تکرار رمز عبور"
+            type={showConfirmPassword ? "text" : "password"}
+            id="confirmPassword"
+            autoComplete="new-password"
+            InputProps={{
+              endAdornment: (
+                <IconButton
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              ),
+            }}
+            sx={inputStyles}
+            className="font-bold rounded-xl"
+          />
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            disabled={loading}
+            className="bg-[#4190FF] h-12 text-base font-bold mt-4 rounded-xl"
           >
-            <ChatContent id={selected} />
-          </Content>
-        </Watermark>
-      </Layout>
-    </Layout>
+            {loading ? "در حال ثبت نام..." : "ثبت نام"}
+          </Button>
+
+          <Box sx={{ textAlign: "center", mt: 2 }}>
+            <Typography variant="body2" display="inline" sx={{ ml: 1 }}>
+              حساب کاربری دارید؟
+            </Typography>
+            <Link href="/login" style={{ textDecoration: "none" }}>
+              <Typography color="primary" variant="body2" display="inline">
+                ورود
+              </Typography>
+            </Link>
+          </Box>
+        </Box>
+      </Box>
+
+      <Snackbar
+        open={!!error}
+        autoHideDuration={6000}
+        onClose={() => setError("")}
+      >
+        <Alert severity="error" sx={{ width: "100%" }}>
+          {error}
+        </Alert>
+      </Snackbar>
+    </Container>
   );
-};
-export default Dashboard;
+}

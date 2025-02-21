@@ -1,10 +1,10 @@
 'use client'
 
-import { List, ListItem, ListItemAvatar, Avatar, ListItemText } from '@mui/material'
+import { List, ListItem, ListItemAvatar, Avatar, ListItemText, CircularProgress } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import Search from "@mui/icons-material/Search"
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import axiosInstance from '@/utils/axiosInstance'
 
 interface Course {
   id: number
@@ -16,51 +16,46 @@ interface Course {
 export default function CoursesPage() {
   const router = useRouter()
   const [courses, setCourses] = useState<Course[]>([])
-  // const [searchTerm, setSearchTerm] = useState('')
+  const [loading, setLoading] = useState(true)
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const fetchCourses = async () => {
+    try {
+      // First try to load from cache
+      const cached = localStorage.getItem('courses')
+      if (cached) {
+        setCourses(JSON.parse(cached))
+      }
+
+      // Then fetch fresh data
+      const response = await axiosInstance.get<Course[]>('/api/channel/detail')
+      setCourses(response.data)
+      localStorage.setItem('courses', JSON.stringify(response.data))
+      
+    } catch (error) {
+      console.error('Error fetching courses:', error)
+      localStorage.removeItem('token')
+      router.push('/login')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    if (!token) {
-      router.push('/login')
-      return
-    }
-
-    const parsedToken = JSON.parse(token)
-    if (!parsedToken.access) {
-      localStorage.removeItem('token')
-      router.push('/login')
-      return
-    }
-
-    // First try to load from cache
-    const cached = localStorage.getItem('courses')
-    if (cached) {
-      setCourses(JSON.parse(cached))
-    }
-
-    // Then fetch fresh data
-    axios.get('https://test22.liara.run/api/channel/detail', {
-      headers: {
-        Authorization: `Bearer ${parsedToken.access}`,
-        'Cache-Control': 'no-cache'
-      }
-    })
-    .then(res => {
-      setCourses(res.data)
-      localStorage.setItem('courses', JSON.stringify(res.data))
-    })
-    .catch(() => {
-      // If API call fails, redirect to login
-      localStorage.removeItem('token')
-      router.push('/login')
-    })
+    fetchCourses()
   }, [router])
 
-  // const filteredCourses = () => {
-  //   return courses.filter(course => 
-  //     course.name?.toLowerCase().includes(searchTerm?.toLowerCase() || '')
-  //   )
-  // }
+  const filteredCourses = courses.filter(course =>
+    course.name.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
+  if (loading) {
+    return (
+      <div className="w-full h-[calc(100vh-148px)] flex justify-center items-center">
+        <CircularProgress />
+      </div>
+    )
+  }
 
   return (
     <>
@@ -70,17 +65,19 @@ export default function CoursesPage() {
           <input
             type="text"
             placeholder="جستجو"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full h-[20px] bg-transparent outline-none font-iranYekan text-right placeholder:text-gray-500"
           />
         </div>
       </div>
       <List className="w-full bg-white">
-        {courses.map((course) => (
+        {filteredCourses.map((course) => (
           <ListItem 
             key={course.id}
             alignItems="flex-start"
             className="cursor-pointer hover:bg-gray-50"
-            onClick={() => router.push(`/course?id=${course.id}`)}
+            onClick={() => router.push(`/courses/course?id=${course.id}`)}
           >
             <ListItemAvatar className='ml-4 mt-0 w-14 h-14 p-1 rounded-[50%]'>
               <Avatar 

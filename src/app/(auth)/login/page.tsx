@@ -3,11 +3,14 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
-import axios from "axios";
 import { IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import axios from 'axios';
+
+
 
 import Image from "next/image";
+import axiosInstance from '@/utils/axiosInstance';
 
 import logo from "../../../../public/img/LogoT.png";
 
@@ -70,21 +73,18 @@ export default function Login() {
     };
 
     try {
-      const res = await axios.post(
-        "https://test22.liara.run/api/account/login/",
-        loginData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      const res = await axiosInstance.post(
+        "/api/account/login/",
+        loginData
       );
 
       localStorage.setItem("token", JSON.stringify(res.data));
+      localStorage.setItem("userEmail", loginData.email as string);
       router.push("/");
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.message || "خطا در ورود");
+    } catch (err: unknown) {
+      if (err && typeof err === 'object' && 'response' in err) {
+        const axiosError = err as { response?: { data?: { message?: string } } };
+        setError(axiosError.response?.data?.message || "خطا در ورود");
       } else {
         setError("خطای غیرمنتظره");
       }
@@ -92,6 +92,7 @@ export default function Login() {
       setLoading(false);
     }
   };
+
 
   return (
     <Container component="main">

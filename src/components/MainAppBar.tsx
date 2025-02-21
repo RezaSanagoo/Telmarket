@@ -1,51 +1,40 @@
 "use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-// import { usePathname } from 'next/navigation'
-import { AppBar, IconButton, Toolbar, SwipeableDrawer, List, ListItem, ListItemIcon, ListItemText  } from '@mui/material'
-import MenuIcon from '@mui/icons-material/MenuRounded'
-import PersonIcon from '@mui/icons-material/Person'
-import SchoolIcon from '@mui/icons-material/School'
-import LogoutIcon from '@mui/icons-material/Logout'
-import Image from 'next/image'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  AppBar,
+  IconButton,
+  Toolbar,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Box,
+  Divider,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/MenuRounded";
+import PersonIcon from "@mui/icons-material/PersonRounded";
+import SchoolIcon from "@mui/icons-material/SchoolRounded";
+import LogoutIcon from "@mui/icons-material/Logout";
+import HomeIcon from "@mui/icons-material/HomeRounded";
+import Image from "next/image";
 
 import logo from "../../public/img/Logo.png";
+import logoT from "../../public/img/LogoT.png";
 
 export default function MainAppBar() {
-  
-  // const pathname = usePathname()
-  
-  // const getPageTitle = (path: string) => {
-  //   switch (path) {
-  //     case '/explore':
-  //       return 'ویترین'
-  //     case '/search':
-  //       return 'جستجو'
-  //     case '/prices':
-  //       return 'قیمت‌ها'
-  //     case '/courses':
-  //       return 'دوره‌ها'
-  //     case '/profile':
-  //       return 'پروفایل'
-  //     default:
-  //       return ''
-  //   }
-  // }
-
   const [drawerOpen, setDrawerOpen] = useState(false);
   const router = useRouter();
 
-  const iOS =
-    typeof navigator !== "undefined" &&
-    /iPad|iPhone|iPod/.test(navigator.userAgent);
-
   const menuItems = [
-    { text: "پروفایل", icon: <PersonIcon />, path: "/profile" },
-    { text: "دوره‌ها", icon: <SchoolIcon />, path: "/courses" },
+    { text: "خانه", icon: <HomeIcon sx={{fontSize : "24px"}} />, path: "/" },
+    { text: "پروفایل", icon: <PersonIcon sx={{fontSize : "24px"}} />, path: "/profile" },
+    { text: "دوره‌ها", icon: <SchoolIcon sx={{fontSize : "24px"}} />, path: "/courses" },
     {
       text: "خروج",
-      icon: <LogoutIcon />,
+      icon: <LogoutIcon sx={{fontSize : "24px"}} />,
       onClick: () => {
         localStorage.removeItem("token");
         router.push("/login");
@@ -67,49 +56,68 @@ export default function MainAppBar() {
         }}
       >
         <Toolbar className="flex justify-between">
-          <div className="flex items-center justify-center gap-1">
-          <Image
-            src={logo.src} 
-            alt="Moj"
-            width={56} // Adjust based on your logo's dimensions
-            height={56} // Adjust based on your logo's dimensions
-            className="p-1"
-            priority
-          />
-          </div>
-          <p className='text-2xl font-extrabold text-[#4190FF]'>مــوجــــ</p>
-
-          {/* <p className='text-lg font-bold '>{getPageTitle(pathname)}</p> */}
-
           <IconButton
             size="large"
             color="inherit"
             onClick={() => setDrawerOpen(true)}
-            sx={{width: 40, height: 40, margin: "8px"}}
+            sx={{ width: 40, height: 40, margin: "8px" }}
           >
             <MenuIcon />
           </IconButton>
+
+          <p className="text-2xl font-extrabold text-[#4190FF]">مــوجــــ</p>
+
+          <div className="flex items-center justify-center gap-1">
+            <Image
+              src={logo.src}
+              alt="Moj"
+              width={56} // Adjust based on your logo's dimensions
+              height={56} // Adjust based on your logo's dimensions
+              className="p-1"
+              priority
+            />
+          </div>
         </Toolbar>
       </AppBar>
 
-      <SwipeableDrawer 
-        anchor="left"
+      <Drawer
+        anchor="right"
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        onOpen={() => setDrawerOpen(true)}
-        disableBackdropTransition={!iOS}
-        disableDiscovery={iOS}
       >
-        <List className="my-3 w-[70vw]">
-          <Image
-            src={logo.src}
-            alt="logo"
-            className=" mr-4"
-            width={64}
-            height={64}
-          />
+        <List className="mb-3 pt-0 w-[70vw]">
+          <Box
+            sx={{
+              minHeight: "20dvh",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundImage: "url('./Tide.svg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              width: "100%",
+              left: 0,
+              top: 0,
+            }}
+          >
+            <Image
+              src={logoT.src}
+              alt="MojLogo"
+              width={206} // Adjust based on your logo's dimensions
+              height={206} // Adjust based on your logo's dimensions
+              className="p-1"
+              priority
+              style={{
+                filter:
+                  "brightness(0) invert(1) drop-shadow(2px 2px 2px #00000088)",
+                width: "15vh",
+                height: "15vh",
+              }}
+            />
+          </Box>
 
-          <hr className="mt-3" />
+          <Divider />
 
           {menuItems.map((item) => (
             <ListItem
@@ -122,24 +130,32 @@ export default function MainAppBar() {
                 }
                 setDrawerOpen(false);
               }}
-              sx={{ cursor: "pointer" }}
+              sx={{
+                cursor: "pointer",
+                height: "56px",
+                "&:hover": {
+                  backgroundColor: "#f0f0f0",
+                },
+              }}
             >
-              <ListItemIcon sx={{ minWidth: "40px" }}>{item.icon}</ListItemIcon>
+              <ListItemIcon sx={{ minWidth: "40px", color: "#666" }}>
+                {item.icon}
+              </ListItemIcon>
 
               <ListItemText
                 primary={item.text}
                 sx={{
                   textAlign: "right",
-
                   "& .MuiTypography-root": {
                     textAlign: "right",
+                    fontWeight: "medium ",
                   },
                 }}
               />
             </ListItem>
           ))}
         </List>
-      </SwipeableDrawer>
+      </Drawer>
     </>
   );
 }

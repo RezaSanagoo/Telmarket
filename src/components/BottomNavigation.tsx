@@ -6,15 +6,22 @@ import Person from "@mui/icons-material/AccountCircleOutlined";
 import Home from "@mui/icons-material/ExploreOutlined";
 import Price from "@mui/icons-material/InsertChartOutlined";
 import { useRouter, usePathname } from "next/navigation";
-import { useState, SyntheticEvent } from "react";
+import { useState, useEffect } from "react";
 
 export default function BottomNav() {
   const router = useRouter();
   const pathname = usePathname();
   const [value, setValue] = useState(pathname);
 
-  const handleChange = (_event: SyntheticEvent, newValue: string) => {
-    setValue(newValue);
+  useEffect(() => {
+    if (pathname.startsWith("/courses")) {
+      setValue("/courses");
+    } else {
+      setValue(pathname);
+    }
+  }, [pathname]);
+
+  const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     router.push(newValue);
   };
 
@@ -32,7 +39,7 @@ export default function BottomNav() {
         padding: "8px",
         paddingTop: "0px",
         fontWeight: "bold",
-        zIndexIndex: 10000,
+        zIndex: 1000,
         "& .MuiSvgIcon-root": {
           fontSize: "24px",
           fontWeight: "bold",

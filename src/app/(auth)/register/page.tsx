@@ -6,6 +6,7 @@ import { useState } from "react";
 import axios from "axios";
 import { IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import axiosInstance from '@/utils/axiosInstance';
 
 
 import Image from "next/image";
@@ -78,26 +79,22 @@ export default function Register() {
       password: password
     };
   
-    axios.post(
-      "https://test22.liara.run/api/account/register/",
-      registerData,
-      {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }
-    )
-    .then((res) => {
+    try {
+      const res = await axiosInstance.post("/api/account/register/", registerData);
       localStorage.setItem("token", JSON.stringify(res.data));
       router.push("/");
-    })
-    .catch((err) => {
-      setError(err.response?.data?.message || 'خطا در ثبت‌نام');
-    })
-    .finally(() => {
+    } catch (err: unknown) {
+      if (err && typeof err === 'object' && 'response' in err) {
+        const axiosError = err as { response?: { data?: { message?: string } } };
+        setError(axiosError.response?.data?.message || "خطا در ورود");
+      } else {
+        setError("خطای غیرمنتظره");
+      }
+    } finally {
       setLoading(false);
-    });
+    }
   };
+
   
   // Add this state for password visibility
   const [showPassword, setShowPassword] = useState(false);

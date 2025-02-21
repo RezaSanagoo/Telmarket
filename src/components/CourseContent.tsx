@@ -1,18 +1,20 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Button from "./Button";
 import TestButton from "./TestButton";
 import CourseHeader from "./CourseHeader";
-import Image from "next/image";
 import ChatBotModal from "./ChatBotModal";
-import axios from "axios";
-import { useRouter } from "next/navigation";
+import axiosInstance from '@/utils/axiosInstance';
+import PlayCircle from '@mui/icons-material/PlayCircleRounded';
 
 interface CoursePost {
   id: number;
   content: string;
   file: string;
   created_at: string;
+  iframe: string;
 }
 
 interface CourseData {
@@ -27,30 +29,35 @@ interface CachedCourse {
 }
 
 const formatTime = (str: string) => {
-  if (!str) return '';
-  
+  if (!str) return "";
+
   const utcDate = new Date(str);
   const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const localDate = utcDate.toLocaleString("fa-IR", { timeZone: userTimezone });
-  
-  if (!localDate.includes(',')) return '';
-  
-  const [datePart, timePart] = localDate.split(", ");
-  if (!datePart || !timePart) return '';
 
-  const [year, month, day] = datePart.split("/").map(part => part.padStart(2, "۰"));
-  const [hour, minutes, seconds] = timePart.split(":").map(part => part.padStart(2, "۰"));
+  if (!localDate.includes(",")) return "";
+
+  const [datePart, timePart] = localDate.split(", ");
+  if (!datePart || !timePart) return "";
+
+  const [year, month, day] = datePart
+    .split("/")
+    .map((part) => part.padStart(2, "۰"));
+  const [hour, minutes, seconds] = timePart
+    .split(":")
+    .map((part) => part.padStart(2, "۰"));
 
   return `${hour}:${minutes}:${seconds} - ${year}/${month}/${day}`;
 };
 
-
 export default function CourseContent({ id }: { id: string }) {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [posts, setPosts] = useState<CoursePost[]>(() => {
-    // Load initial posts from localStorage if available
-    const cachedPosts = localStorage.getItem(`course_posts_${id}`);
-    return cachedPosts ? JSON.parse(cachedPosts) : [];
+    if (typeof window !== 'undefined') {
+      const cachedPosts = localStorage.getItem(`course_posts_${id}`);
+      return cachedPosts ? JSON.parse(cachedPosts) : [];
+    }
+    return [];
   });
   const [courseInfo, setCourseInfo] = useState<CourseData>({
     id: Number(id),
@@ -58,6 +65,7 @@ export default function CourseContent({ id }: { id: string }) {
     image: "",
   });
   const router = useRouter();
+
 
   useEffect(() => {
     // Get course info from localStorage
@@ -74,29 +82,25 @@ export default function CourseContent({ id }: { id: string }) {
       }
     }
 
-    // Fetch posts from API
-    const token = localStorage.getItem("token");
-    if (!token || !JSON.parse(token).hasOwnProperty("access")) {
-      router.push("/login");
-      return;
-    }
+    // Fetch posts from API using axiosInstance
+    const fetchPosts = async () => {
+      try {
+        const response = await axiosInstance.get<CoursePost[]>(
+          `/api/channel/channels/${id}/posts/`
+        );
+        
+        if (JSON.stringify(response.data) !== JSON.stringify(posts)) {
+          setPosts(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+        router.push('/login');
+      }
+    };
 
-    axios
-      .get(
-        `https://test22.liara.run/api/channel/channels/${id}/posts/`,
-        {
-          headers: {
-            Authorization: `Bearer ${JSON.parse(token).access}`,
-            "Cache-Control": "no-cache",
-          },
-        }
-      )
-      .then((res) => {
-        if (JSON.stringify(res.data) !== JSON.stringify(posts)) {
-          setPosts(res.data);
-        }
-      });
+    fetchPosts();
   }, [id, posts, router]);
+
 
   useEffect(() => {
     if (posts.length > 0) {
@@ -156,14 +160,15 @@ export default function CourseContent({ id }: { id: string }) {
                 <h4 className="mb-2 text-sm px-3 font-bold">
                   {courseInfo.name}
                 </h4>
-                <Image
-                  src={`https://test22.liara.run${post.file}`}
-                  alt="Post Image"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  style={{ width: "100%", height: "auto" }}
-                />
+                  <Image
+                    src={`https://test22.liara.run${post.file}`}
+                    alt="Post Image"
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    style={{ width: "100%", height: "auto" }}
+                  />
+                  <PlayCircle sx={{ color: "white", fontSize: "5rem" , position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" , opacity: 0.6 }} />
                 <p className="whitespace-pre-line text-sm px-3 pt-2 mb-[-16px]">
                   {post.content}
                 </p>
@@ -185,7 +190,7 @@ export default function CourseContent({ id }: { id: string }) {
           ))}
         </div>
       </div>
-      <ChatBotModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+      <ChatBotModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)}/>
     </div>
   );
 }

@@ -10,17 +10,14 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 
 interface EditProfileModalProps {
   open: boolean;
   onClose: () => void;
 }
 
-export default function EditProfileModal({
-  open,
-  onClose,
-}: EditProfileModalProps) {
+export default function EditProfileModal({ open, onClose }: EditProfileModalProps) {
   const [formData, setFormData] = useState({
     age: "",
     city: "",
@@ -108,23 +105,11 @@ export default function EditProfileModal({
 
   const handleSubmit = async () => {
     try {
-      const token = localStorage.getItem("token");
-      if (!token) throw new Error("No token found");
-
-      await axios.post(
-        "https://test22.liara.run/api/account/student-profile/",
-        {
-          age: Number(formData.age),
-          city: formData.city,
-          sex: formData.sex,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${JSON.parse(token).access}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      await axiosInstance.post("/api/account/student-profile/", {
+        age: Number(formData.age),
+        city: formData.city,
+        sex: formData.sex,
+      });
 
       onClose();
       window.location.reload();

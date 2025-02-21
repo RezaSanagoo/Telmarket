@@ -4,7 +4,7 @@ import SendIcon from "@mui/icons-material/ArrowUpwardRounded";
 import PersonIcon from "@mui/icons-material/Person";
 import logo from "../../public/img/LogoT.png";
 import Image from "next/image";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 
 interface Message {
   text: string;
@@ -22,7 +22,7 @@ export default function ChatBotModal({ isOpen, onClose }: ChatBotModalProps) {
     { text: "سلام ! چطور میتونم کمکتون کنم؟", isBot: true, isLoading: false },
   ]);
   const [input, setInput] = useState("");
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -34,34 +34,29 @@ export default function ChatBotModal({ isOpen, onClose }: ChatBotModalProps) {
       { text: "", isBot: true, isLoading: true },
     ]);
     setInput("");
+    setIsLoading(true);
 
     try {
-      const token = localStorage.getItem("token");
-      if (!token) throw new Error("لطفا وارد حساب کاربری خود شوید");
-
-      const { data } = await axios.post(
-        "https://test22.liara.run/api/bot/ask/",
-        { question: input },
-        {
-          headers: {
-            Authorization: `Bearer ${JSON.parse(token).access}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const { data } = await axiosInstance.post("/api/bot/ask/", {
+        question: input,
+      });
 
       setMessages((prev) => [
         ...prev.slice(0, -1),
+        // @ts-expect-error - Response data contains message property from chat API
         { text: data.response, isBot: true },
       ]);
-    } catch (error: unknown) {
+    } catch (error) {
+      console.error("Chat error:", error);
       setMessages((prev) => [
         ...prev.slice(0, -1),
-        { text: "An error occurred:" + error, isBot: true },
+        { text: "متاسفانه خطایی رخ داد. لطفا دوباره تلاش کنید.", isBot: true },
       ]);
+    } finally {
+      setIsLoading(false);
     }
   };
-    if (!isOpen) return null; 
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 backdrop-blur-sm bg-black/60 flex items-center justify-center z-50 p-4 animate-fadeIn">

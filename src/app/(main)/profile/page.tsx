@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { Box, Tabs, Tab, CircularProgress, Button } from "@mui/material";
 import Graph from "@mui/icons-material/AutoGraphRounded";
 import EditProfileModal from "@/components/EditProfileModal";
-import axios from "axios";
 import { motion } from "motion/react";
+import axiosInstance from "@/utils/axiosInstance";
 
 interface StudentInfo {
   purchased_channels: string[];
@@ -20,7 +20,6 @@ interface CourseProgress {
   progress: number;
   description: string;
 }
-
 
 const courseData: CourseProgress[] = [
   {
@@ -52,17 +51,8 @@ export default function ProfilePage() {
   useEffect(() => {
     const fetchStudentInfo = async () => {
       try {
-        const token = localStorage.getItem("token");
-        if (!token) throw new Error("No token found");
-
-        const { data } = await axios.get(
-          "https://test22.liara.run/api/account/student-info/",
-          {
-            headers: {
-              Authorization: `Bearer ${JSON.parse(token).access}`,
-              "Content-Type": "application/json"
-            }
-          }
+        const { data } = await axiosInstance.get<StudentInfo>(
+          "/api/account/student-info/"
         );
         setStudentInfo(data);
       } catch (error) {
@@ -78,27 +68,33 @@ export default function ProfilePage() {
   return (
     <div className="flex flex-col p-6 gap-4">
       {loading ? (
-        <div className="flex justify-center">
-          <CircularProgress />
-        </div>
+        <div className="w-full h-[calc(100vh-208px)] flex justify-center items-center">
+        <CircularProgress />
+      </div>
       ) : (
         <>
       <div className="flex justify-between">
-        <div className="flex flex-col gap-2">
-          <h2 className="text-[20px] font-bold text-right text-black">
-            نام و نام خانوادگی
-          </h2>
-          <p className="text-xs text-[#2E2E2E]">Rezasa***@gmail.com</p>
-        </div>
+  <div className="flex flex-col gap-2">
+    <h2 className="text-[20px] font-bold text-right text-black">
+      نام و نام خانوادگی
+    </h2>
+    <p className="text-xs text-[#2E2E2E]">
+      {localStorage.getItem('userEmail')}
+    </p>
+  </div>
 
-        <div className="flex flex-col gap-2 justify-center">
-          <p className="text-xs text-[#2E2E2E]">آخرین بروزرسانی</p>
-          <p className="text-xs text-[#2E2E2E]">۱۸:۰۷ ۱۴۰۳/۱۰/۲۳</p>
-        </div>
-        
-      </div>
+  <div className="flex flex-col gap-2 justify-center">
+    <p className="text-xs text-[#2E2E2E]">آخرین بروزرسانی</p>
+    <p className="text-xs text-[#2E2E2E]">۱۸:۰۷ ۱۴۰۳/۱۰/۲۳</p>
+  </div>
+</div>
 
-      {studentInfo && (!studentInfo.age || !studentInfo.city || !studentInfo.sex) && (
+{/* {studentInfo && (
+  studentInfo.age === 0 || 
+  studentInfo.city === '' || 
+  studentInfo.sex === '' || 
+  studentInfo.purchased_channels.length === 0
+) && ( */}
   <motion.div 
     initial={{ x: -100, opacity: 0 }}
     animate={{ x: 0, opacity: 1 }}
@@ -125,7 +121,7 @@ export default function ProfilePage() {
       ویرایش پروفایل
     </Button>
   </motion.div>
-)}
+{/* )} */}
 
 
 

@@ -1,11 +1,16 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.telmarket.app',
-  appName: 'TelMarket',
+  appId: 'com.mojfinance.app',
+  appName: 'Moj Finance',
   webDir: 'out',
   server: {
     androidScheme: 'https'
+  },
+  plugins: {
+    ScreenCapture: {
+      enable: true
+    }
   }
 };
 

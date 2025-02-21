@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect } from 'react'
-import AuthCheck from '@/components/AuthCheck'
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@/theme/theme";
 
@@ -32,7 +31,6 @@ export default function ClientLayout({
         </head>
         <body>
           <ThemeProvider theme={theme}>
-            <AuthCheck />
             {children}
           </ThemeProvider>
         </body>
